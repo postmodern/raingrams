@@ -1,0 +1,7 @@
+require 'raingrams/extensions/class'
+require 'raingrams/extensions/nilclass'
+require 'raingrams/extensions/trueclass'
+require 'raingrams/extensions/falseclass'
+require 'raingrams/extensions/symbol'
+require 'raingrams/extensions/string'
+require 'raingrams/extensions/object'
