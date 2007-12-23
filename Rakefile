@@ -4,7 +4,7 @@ require 'rubygems'
 require 'hoe'
 require './lib/raingrams/version.rb'
 
-Hoe.new('raingrams', GScraper::VERSION) do |p|
+Hoe.new('raingrams', Raingrams::VERSION) do |p|
   p.rubyforge_name = 'raingrams'
   p.author = 'Postmodern Modulus III'
   p.email = 'postmodern.mod3@gmail.com'
