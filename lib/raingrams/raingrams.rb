@@ -1,7 +1,7 @@
-require 'raingrams/unigrammodel'
-require 'raingrams/multigrammodel'
-require 'raingrams/openvocabulary/unigrammodel'
-require 'raingrams/openvocabulary/multigrammodel'
+require 'raingrams/unigram_model'
+require 'raingrams/multigram_model'
+require 'raingrams/open_vocabulary/unigram_model'
+require 'raingrams/open_vocabulary/multigram_model'
 
 module Raingrams
   def Raingrams.closed_vocabulary_model(opts={},&block)

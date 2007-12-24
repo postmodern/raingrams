@@ -1,4 +1,4 @@
-require 'raingrams/multigrammodel'
+require 'raingrams/multigram_model'
 
 module Raingrams
   class QuadgramModel < MultigramModel

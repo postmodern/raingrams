@@ -1,5 +1,5 @@
-require 'raingrams/unigrammodel'
-require 'raingrams/openvocabulary/openmodel'
+require 'raingrams/unigram_model'
+require 'raingrams/openvocabulary/open_model'
 
 module Raingrams
   module OpenVocabulary

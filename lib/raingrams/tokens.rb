@@ -1,4 +1,4 @@
 require 'raingrams/tokens/token'
-require 'raingrams/tokens/startsentence'
-require 'raingrams/tokens/stopsentence'
+require 'raingrams/tokens/start_sentence'
+require 'raingrams/tokens/stop_sentence'
 require 'raingrams/tokens/unknown'
