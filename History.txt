@@ -1,7 +1,7 @@
 == 0.1.0 / 2007-12-23
 
- * Initial release.
- * Supports all non-zero ngram sizes.
- * Supports text and non-text grams.
- * Supports Open and Closed vocabulary models.
+* Initial release.
+* Supports all non-zero ngram sizes.
+* Supports text and non-text grams.
+* Supports Open and Closed vocabulary models.
 

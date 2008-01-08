@@ -10,15 +10,15 @@ parsing styles and open/closed vocabulary models.
 
 == FEATURES/PROBLEMS:
   
- * Supports all non-zero ngram sizes.
- * Supports text and non-text grams.
- * Supports Open and Closed vocabulary models.
+* Supports all non-zero ngram sizes.
+* Supports text and non-text grams.
+* Supports Open and Closed vocabulary models.
 
 == REQUIREMENTS:
 
 == INSTALL:
 
-sudo gem install raingrams
+  $ sudo gem install raingrams
 
 == LICENSE:
 
