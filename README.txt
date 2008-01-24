@@ -14,8 +14,6 @@ parsing styles and open/closed vocabulary models.
 * Supports text and non-text grams.
 * Supports Open and Closed vocabulary models.
 
-== REQUIREMENTS:
-
 == INSTALL:
 
   $ sudo gem install raingrams
