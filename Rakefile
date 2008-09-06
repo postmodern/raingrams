@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'hoe'
+require './tasks/spec.rb'
 require './lib/raingrams/version.rb'
 
 Hoe.new('raingrams', Raingrams::VERSION) do |p|
