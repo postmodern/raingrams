@@ -16,6 +16,7 @@ lib/raingrams/extensions/string.rb
 lib/raingrams/extensions/symbol.rb
 lib/raingrams/extensions/true_class.rb
 lib/raingrams/extensions.rb
+lib/raingrams/tokens/comma.rb
 lib/raingrams/tokens/token.rb
 lib/raingrams/tokens/start_sentence.rb
 lib/raingrams/tokens/stop_sentence.rb
@@ -24,7 +25,7 @@ lib/raingrams/tokens.rb
 lib/raingrams/ngram.rb
 lib/raingrams/model.rb
 lib/raingrams/unigram_model.rb
-lib/raingrams/multigram_model.rb
+lib/raingrams/ngram_model.rb
 lib/raingrams/bigram_model.rb
 lib/raingrams/trigram_model.rb
 lib/raingrams/quadgram_model.rb
@@ -32,11 +33,12 @@ lib/raingrams/pentagram_model.rb
 lib/raingrams/hexagram_model.rb
 lib/raingrams/open_vocabulary/open_model.rb
 lib/raingrams/open_vocabulary/unigram_model.rb
-lib/raingrams/open_vocabulary/multigram_model.rb
+lib/raingrams/open_vocabulary/ngram_model.rb
 lib/raingrams/open_vocabulary/bigram_model.rb
 lib/raingrams/open_vocabulary/trigram_model.rb
 lib/raingrams/open_vocabulary/quadgram_model.rb
 lib/raingrams/open_vocabulary/pentagram_model.rb
 lib/raingrams/open_vocabulary/hexagram_model.rb
 lib/raingrams/open_vocabulary.rb
-test/test_raingrams.rb
+tasks/spec.rb
+spec/spec_helper.rb

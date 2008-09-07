@@ -4,15 +4,17 @@ require 'raingrams/tokens/stop_sentence'
 require 'raingrams/exceptions/prefix_frequency_missing'
 
 module Raingrams
-  class MultigramModel < Model
+  class NgramModel < Model
 
     # Frequencies of n-1 grams
     attr_reader :prefix_frequency
 
-    def initialize(opts={},&block)
+    def initialize(options={},&block)
       @prefix_frequency = Hash.new { |hash,key| 0 }
 
-      super(opts) { |model| model.build(&block) }
+      super(options) do |model|
+        model.build(&block)
+      end
     end
 
     def ngrams_from_words(words)

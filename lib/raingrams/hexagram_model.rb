@@ -1,12 +1,10 @@
-require 'raingrams/multigram_model'
+require 'raingrams/ngram_model'
 
 module Raingrams
-  class HexagramModel < MultigramModel
+  class HexagramModel < NgramModel
 
-    def initialize(opts={},&block)
-      opts[:ngram_size] = 6
-
-      super(opts,&block)
+    def initialize(options={},&block)
+      super(options.merge(:ngram_size => 6),&block)
     end
 
   end
