@@ -2,6 +2,7 @@ History.txt
 LICENSE.txt
 Manifest.txt
 README.txt
+TODO.txt
 Rakefile
 lib/raingrams.rb
 lib/raingrams/version.rb
@@ -16,7 +17,6 @@ lib/raingrams/extensions/string.rb
 lib/raingrams/extensions/symbol.rb
 lib/raingrams/extensions/true_class.rb
 lib/raingrams/extensions.rb
-lib/raingrams/tokens/comma.rb
 lib/raingrams/tokens/token.rb
 lib/raingrams/tokens/start_sentence.rb
 lib/raingrams/tokens/stop_sentence.rb
