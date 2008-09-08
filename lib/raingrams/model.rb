@@ -24,26 +24,18 @@ module Raingrams
     # Ignore References
     attr_reader :ignore_references
 
-    # Convert Acronyms to names within parsed text
-    attr_reader :convert_acronyms
-
-    # Convert Abbreviations to names within parsed text
-    attr_reader :convert_abbrev
-
     # Frequencies of observed ngrams
     attr_reader :frequency
 
     # Normalized table of observed ngrams
     attr_reader :probability
 
-    def initialize(opts={},&block)
-      @ngram_size = opts[:ngram_size]
-      @ignore_case = opts[:ignore_case] || false
-      @ignore_punc = opts[:ignore_punc] || true
-      @ignore_urls = opts[:ignore_urls] || false
-      @ignore_phone_numbers = opts[:ignore_phone_numbers] || false
-      @convert_acronyms = opts[:convert_acronyms] || false
-      @convert_abbrev = opts[:convert_abbrev] || false
+    def initialize(options={},&block)
+      @ngram_size = options[:ngram_size]
+      @ignore_case = (options[:ignore_case] || false)
+      @ignore_punc = (options[:ignore_punc] || true)
+      @ignore_urls = (options[:ignore_urls] || false)
+      @ignore_phone_numbers = (options[:ignore_phone_numbers] || false)
 
       @frequency = Hash.new { |hash,key| 0 }
       @probability = Hash.new { |hash,key| 0.0 }

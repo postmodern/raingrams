@@ -4,7 +4,7 @@ module Raingrams
   module Tokens
     class StartSentence < Token
 
-      def self.to_s
+      def to_s
         '<s>'
       end
 

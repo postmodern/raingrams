@@ -4,7 +4,7 @@ module Raingrams
   module Tokens
     class Unknown < Token
 
-      def self.to_s
+      def to_s
         '<unknown>'
       end
 
