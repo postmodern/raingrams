@@ -1,0 +1,4 @@
+= Updates:
+
+* Allow for models to be dumped out into a static format (YAML or XML).
+
