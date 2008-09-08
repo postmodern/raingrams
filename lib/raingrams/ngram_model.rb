@@ -66,9 +66,7 @@ module Raingrams
       train_with_ngrams(ngrams_from_text(text))
     end
 
-    def build(&block)
-      clear_probabilities
-
+    def refresh(&block)
       block.call(self) if block
 
       @frequency.each do |ngram,count|
@@ -82,6 +80,14 @@ module Raingrams
       end
 
       return self
+    end
+
+    def build(&block)
+      refresh do
+        clear_probabilities
+
+        block.call(self) if block
+      end
     end
 
     def ngrams_prefixed_by(prefix)
