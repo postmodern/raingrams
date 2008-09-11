@@ -1,6 +1,6 @@
 = Raingrams
 
-* http://rubyforge.net/projects/raingrams/
+* http://raingrams.rubyforge.net/
 * Postmodern Modulus III (postmodern.mod3@gmail.com)
 
 == DESCRIPTION:
