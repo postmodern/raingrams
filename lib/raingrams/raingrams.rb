@@ -1,23 +1,13 @@
-require 'raingrams/unigram_model'
-require 'raingrams/ngram_model'
-require 'raingrams/open_vocabulary/unigram_model'
-require 'raingrams/open_vocabulary/ngram_model'
+require 'raingrams/model'
+require 'raingrams/open_vocabulary/model'
 
 module Raingrams
   def Raingrams.closed_vocabulary_model(options={},&block)
-    if options[:ngram_size] == 1
-      return UnigramModel.new(options,&block)
-    else
-      return NgramModel.new(options,&block)
-    end
+    Model.new(options,&block)
   end
 
   def Raingrams.open_vocabulary_model(options={},&block)
-    if options[:ngram_size]==1
-      return OpenVocabulary::UnigramModel.new(options,&block)
-    else
-      return OpenVocabulary::NgramModel.new(options,&block)
-    end
+    OpenVocabulary::Model.new(options,&block)
   end
 
   def Raingrams.model(options={},&block)
