@@ -4,8 +4,8 @@ module Raingrams
   module Tokens
     class StartSentence < Token
 
-      def to_s
-        '<s>'
+      def initialize
+        super('<s>')
       end
 
     end

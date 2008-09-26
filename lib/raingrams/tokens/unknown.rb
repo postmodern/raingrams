@@ -4,8 +4,8 @@ module Raingrams
   module Tokens
     class Unknown < Token
 
-      def to_s
-        '<unknown>'
+      def initialize
+        super('<unknown>')
       end
 
     end
