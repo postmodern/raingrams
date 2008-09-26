@@ -1,11 +1,9 @@
-require 'raingrams/ngram_model'
+require 'raingrams/model'
 
 module Raingrams
-  class QuadgramModel < NgramModel
+  class QuadgramModel < Model
 
-    def initialize(options={},&block)
-      super(options.merge(:ngram_size => 4),&block)
-    end
+    ngram_size 4
 
   end
 end

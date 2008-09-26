@@ -1,11 +1,9 @@
-require 'raingrams/ngram_model'
+require 'raingrams/model'
 
 module Raingrams
-  class HexagramModel < NgramModel
+  class HexagramModel < Model
 
-    def initialize(options={},&block)
-      super(options.merge(:ngram_size => 6),&block)
-    end
+    ngram_size 6
 
   end
 end

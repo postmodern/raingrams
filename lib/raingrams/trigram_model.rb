@@ -1,11 +1,9 @@
-require 'raingrams/ngram_model'
+require 'raingrams/model'
 
 module Raingrams
-  class TrigramModel < NgramModel
+  class TrigramModel < Model
 
-    def initialize(options={},&block)
-      super(options.merge(:ngram_size => 3),&block)
-    end
+    ngram_size 3
 
   end
 end
