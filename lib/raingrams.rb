@@ -1,7 +1,7 @@
 require 'raingrams/extensions'
 require 'raingrams/raingrams'
 require 'raingrams/ngram'
-require 'raingrams/unigram_model'
+require 'raingrams/model'
 require 'raingrams/bigram_model'
 require 'raingrams/trigram_model'
 require 'raingrams/quadgram_model'

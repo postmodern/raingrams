@@ -19,14 +19,14 @@ lib/raingrams/tokens/unknown.rb
 lib/raingrams/tokens.rb
 lib/raingrams/ngram.rb
 lib/raingrams/probability_table.rb
-lib/raingrams/ngram_model.rb
+lib/raingrams/model.rb
 lib/raingrams/bigram_model.rb
 lib/raingrams/trigram_model.rb
 lib/raingrams/quadgram_model.rb
 lib/raingrams/pentagram_model.rb
 lib/raingrams/hexagram_model.rb
 lib/raingrams/open_vocabulary/open_model.rb
-lib/raingrams/open_vocabulary/ngram_model.rb
+lib/raingrams/open_vocabulary/model.rb
 lib/raingrams/open_vocabulary/bigram_model.rb
 lib/raingrams/open_vocabulary/trigram_model.rb
 lib/raingrams/open_vocabulary/quadgram_model.rb
