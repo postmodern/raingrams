@@ -1,20 +1,53 @@
+require 'raingrams/extensions'
+
 module Raingrams
   class Ngram < Array
 
-    def initialize(objs)
-      super(objs.map { |obj| obj.to_gram })
+    #
+    # Creates a new Ngram object with the specified _objects_.
+    #
+    def initialize(objects)
+      super(objects.map { |obj| obj.to_gram })
     end
 
-    def self.[](*objs)
-      self.new(objs)
+    #
+    # Creates a new Ngram object from the specified _objects_.
+    #
+    def self.[](*objects)
+      self.new(objects)
     end
 
+    #
+    # Creates a new Ngram object by appending the specified _grams_ to the
+    # ngram.
+    #
+    def +(grams)
+      if grams.kind_of?(Array)
+        return self.class.new(super(grams.map { |gram|
+          gram.to_gram
+        }))
+      else
+        return self.class.new(super([grams.to_gram]))
+      end
+    end
+
+    def <<(gram)
+      super(gram.to_gram)
+    end
+
+    #
+    # Returns the prefix of the ngram.
+    #
     def prefix
       self[0...length-1]
     end
 
-    def prefixed_by?(ngram)
-      prefix==ngram
+    #
+    # Returns +true+ if the ngram is prefixed by the specified
+    # _smaller_ngram_.
+    #
+    def prefixed_by?(smaller_ngram)
+      prefix == smaller_ngram
     end
 
     def postfix
@@ -22,15 +55,15 @@ module Raingrams
     end
 
     def postfixed_by?(ngram)
-      postfix==ngram
+      postfix == ngram
     end
 
     def starts_with?(obj)
-      self[0]==obj.to_gram
+      self.first == obj.to_gram
     end
 
     def ends_with?(obj)
-      self[-1]==obj.to_gram
+      self.last == obj.to_gram
     end
 
     def include?(obj)
@@ -47,6 +80,10 @@ module Raingrams
 
     def to_s
       join(', ')
+    end
+
+    def inspect
+      'Ngram[' + self.map { |gram| gram.inspect }.join(', ') + ']'
     end
 
   end
