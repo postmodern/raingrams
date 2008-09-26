@@ -7,14 +7,18 @@ module Raingrams
       # The fixed lexicon of this model
       attr_reader :lexicon
 
-      def initialize(opts={},&block)
-        @lexicon = opts[:lexicon] || []
+      def initialize(options={},&block)
+        @lexicon = (options[:lexicon] || [])
 
-        super(opts,&block)
+        @lexicon.map! do |word|
+          word.to_gram
+        end
+
+        super(options,&block)
       end
 
       def within_lexicon?(gram)
-        @lexicon.include?(gram)
+        @lexicon.include?(gram.to_gram)
       end
 
       def train_ngram(ngram)
