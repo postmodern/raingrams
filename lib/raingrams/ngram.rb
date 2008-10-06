@@ -70,6 +70,10 @@ module Raingrams
       super(obj.to_gram)
     end
 
+    def includes?(*grams)
+      (self & grams) == grams
+    end
+
     def flatten
       self.dup
     end
