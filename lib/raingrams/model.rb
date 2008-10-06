@@ -605,20 +605,32 @@ module Raingrams
     # _options_.
     #
     def random_sentence(options={})
-      grams = random_ngram_sentence(options)
-      
-      return grams[@ngram_size...-@ngram_size].join(' ')
+      grams = random_gram_sentence(options)
+      sentence = grams.delete_if { |gram|
+        gram == Tokens.start || gram == Tokens.stop
+      }.join(' ')
+
+      sentence << '.' if @ignore_punctuation
+      return sentence
     end
 
     #
     # Returns a randomly generated paragraph of text using the given
     # _options_.
     #
+    # _options_ may contain the following keys:
+    # <tt>:min_sentences</tt>:: Minimum number of sentences in the
+    #                           paragraph. Defaults to 3.
+    # <tt>:max_sentences</tt>:: Maximum number of sentences in the
+    #                           paragraph. Defaults to 6.
+    #
     def random_paragraph(options={})
+      min_sentences = (options[:min_sentences] || 3)
+      max_sentences = (options[:max_sentences] || 6)
       sentences = []
 
-      (rand(3) + 3).times do
-        sentences << random_sentences(options)
+      (rand(max_sentences - min_sentences) + min_sentences).times do
+        sentences << random_sentence(options)
       end
 
       return sentences.join(' ')
@@ -627,10 +639,22 @@ module Raingrams
     #
     # Returns randomly generated text using the given _options_.
     #
+    # _options_ may contain the following keys:
+    # <tt>:min_sentences</tt>:: Minimum number of sentences in the
+    #                           paragraph. Defaults to 3.
+    # <tt>:max_sentences</tt>:: Maximum number of sentences in the
+    #                           paragraph. Defaults to 6.
+    # <tt>:min_paragraphs</tt>:: Minimum number of paragraphs in the text.
+    #                            Defaults to 3.
+    # <tt>:max_paragraphs</tt>:: Maximum number of paragraphs in the text.
+    #                            Defaults to 5.
+    #
     def random_text(options={})
+      min_paragraphs = (options[:min_paragraphs] || 3)
+      max_paragraphs = (options[:max_paragraphs] || 6)
       paragraphs = []
 
-      (rand(3) + 5).times do
+      (rand(max_paragraphs - min_paragraphs) + min_paragraphs).times do
         paragraphs << random_paragraph(options)
       end
 
