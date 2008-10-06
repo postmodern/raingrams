@@ -1,9 +1,9 @@
-require 'raingrams/ngram_model'
 require 'raingrams/open_vocabulary/open_model'
+require 'raingrams/model'
 
 module Raingrams
   module OpenVocabulary
-    class NgramModel < Raingrams::NgramModel
+    class Model < Raingrams::Model
 
       include OpenModel
 
