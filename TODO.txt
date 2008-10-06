@@ -1,4 +1,5 @@
-= Updates:
+== TODO:
 
-* Allow for models to be dumped out into a static format (YAML or XML).
+* Add spes for the Model class.
+* Add a command-line utility to utilize the Raingrams API.
 
