@@ -1,6 +1,9 @@
 require 'raingrams/ngram'
+require 'raingrams/ngram_set'
 require 'raingrams/probability_table'
 require 'raingrams/tokens'
+
+require 'set'
 
 module Raingrams
   class Model
@@ -8,11 +11,17 @@ module Raingrams
     # Size of ngrams to use
     attr_reader :ngram_size
 
+    # The sentence starting ngram
+    attr_reader :starting_ngram
+
+    # The sentence stopping ngram
+    attr_reader :stoping_ngram
+
     # Ignore case of parsed text
     attr_reader :ignore_case
 
     # Ignore the punctuation of parsed text
-    attr_reader :ignore_punc
+    attr_reader :ignore_punctuation
 
     # Ignore URLs
     attr_reader :ignore_urls
@@ -34,23 +43,26 @@ module Raingrams
     #
     # _options_ may contain the following keys:
     # <tt>:ignore_case</tt>:: Defaults to +false+.
-    # <tt>:ignore_punc</tt>:: Defaults to +true+.
+    # <tt>:ignore_punctuation</tt>:: Defaults to +true+.
     # <tt>:ignore_urls</tt>:: Defaults to +false+.
     # <tt>:ignore_phone_numbers</tt>:: Defaults to +false+.
     #
     def initialize(options={},&block)
       @ngram_size = options[:ngram_size]
+      @starting_ngram = Ngram.new(Tokens.start * @ngram_size)
+      @stoping_ngram = Ngram.new(Tokens.stop * @ngram_size)
+
       @ignore_case = false
-      @ignore_punc = true
-      @ignore_urls = false
+      @ignore_punctuation = true
+      @ignore_urls = true
       @ignore_phone_numbers = false
 
       if options.has_key?(:ignore_case)
         @ignore_case = options[:ignore_case]
       end
 
-      if options.has_key?(:ignore_punc)
-        @ignore_punc = options[:ignore_punc]
+      if options.has_key?(:ignore_punctuation)
+        @ignore_punctuation = options[:ignore_punctuation]
       end
 
       if options.has_key?(:ignore_urls)
@@ -85,7 +97,7 @@ module Raingrams
 
       if @ignore_urls
         # remove URLs
-        sentence.gsub!(/\s*\w+:\/\/\w*\s*/,' ')
+        sentence.gsub!(/\s*\w+:\/\/[\w\/,\._\-%\?&=]*\s*/,' ')
       end
 
       if @ignore_phone_numbers
@@ -103,12 +115,12 @@ module Raingrams
         sentence.downcase!
       end
 
-      if @ignore_punc
+      if @ignore_punctuation
         # split and ignore punctuation characters
         return sentence.scan(/\w+[_\.:']?\w+/)
       else
         # split and accept punctuation characters
-        return sentence.scan(/\w+|[-_,\.;'"]/)
+        return sentence.scan(/[\w\-_,\.;'"\\\/]+/)
       end
     end
 
@@ -123,15 +135,15 @@ module Raingrams
     # Returns the ngrams that compose the model.
     #
     def ngrams
-      ngrams = []
+      ngram_set = NgramSet.new
 
       @prefixes.each do |prefix,table|
-        table.grams.each do |gram|
-          ngrams << (prefix + gram)
+        table.each_gram do |gram|
+          ngram_set << (prefix + gram)
         end
       end
 
-      return ngrams
+      return ngram_set
     end
 
     #
@@ -148,7 +160,7 @@ module Raingrams
     #
     def each_ngram(&block)
       @prefixes.each do |prefix,table|
-        table.grams.each do |gram|
+        table.each_gram do |gram|
           block.call(prefix + gram) if block
         end
       end
@@ -160,13 +172,100 @@ module Raingrams
     # Selects the ngrams that match the given _block_.
     #
     def ngrams_with(&block)
-      ngrams = []
+      selected_ngrams = NgramSet.new
 
       each_ngram do |ngram|
-        ngrams << ngram if block.call(ngram)
+        selected_ngrams << ngram if block.call(ngram)
       end
 
       return ngrams
+    end
+
+    #
+    # Returns the ngrams prefixed by the specified _prefix_.
+    #
+    def ngrams_prefixed_by(prefix)
+      ngram_set = NgramSet.new
+
+      return ngram_set unless @prefixes.has_key?(prefix)
+
+      ngram_set += @prefixes[prefix].grams.map do |gram|
+        prefix + gram
+      end
+
+      return ngram_set
+    end
+
+    #
+    # Returns the ngrams postfixed by the specified _postfix_.
+    #
+    def ngrams_postfixed_by(postfix)
+      ngram_set = NgramSet.new
+
+      @prefixes.each do |prefix,table|
+        if prefix[1..-1] == postfix[0..-2]
+          if table.has_gram?(postfix.last)
+            ngram_set << (prefix + postfix.last)
+          end
+        end
+      end
+
+      return ngram_set
+    end
+
+    #
+    # Returns the ngrams starting with the specified _gram_.
+    #
+    def ngrams_starting_with(gram)
+      ngram_set = NgramSet.new
+
+      @prefixes.each do |prefix,table|
+        if prefix.first == gram
+          table.each_gram do |gram|
+            ngram_set << (prefix + gram)
+          end
+        end
+      end
+
+      return ngram_set
+    end
+
+    #
+    # Returns the ngrams which end with the specified _gram_.
+    #
+    def ngrams_ending_with(gram)
+      ngram_set = NgramSet.new
+
+      @prefixes.each do |prefix,table|
+        if table.has_gram?(gram)
+          ngram_set << (prefix + gram)
+        end
+      end
+
+      return ngram_set
+    end
+
+    #
+    # Returns the ngrams including the specified _grams_.
+    #
+    def ngrams_including(*grams)
+      ngram_set = NgramSet.new
+
+      @prefixes.each do |prefix,table|
+        if prefix.includes?(grams)
+          table.each_gram do |gram|
+            ngram_set << (prefix + gram)
+          end
+        else
+          table.each_gram do |gram|
+            if grams.include?(gram)
+              ngram_set << (prefix + gram)
+            end
+          end
+        end
+      end
+
+      return ngram_set
     end
 
     #
@@ -202,73 +301,33 @@ module Raingrams
     end
 
     #
-    # Returns the ngrams which start with the specified _gram_.
-    #
-    def ngrams_starting_with(gram)
-      ngrams = []
-      gram = gram.to_gram
-
-      @prefixes.each do |prefix,table|
-        if prefix.starts_with?(gram)
-          table.grams.each do |gram|
-            ngrams << (prefix + gram)
-          end
-        end
-      end
-
-      return ngrams
-    end
-
-    #
-    # Returns all ngrams which end with the specified _gram_.
-    #
-    def ngrams_ending_with(gram)
-      ngrams = []
-      gram = gram.to_gram
-
-      @prefixes.each do |prefix,table|
-        if table.grams.include?(gram)
-          table.grams.each do |gram|
-            ngrams << (prefix + gram)
-          end
-        end
-      end
-
-      return ngrams
-    end
-
-    #
-    # Returns all ngrams that have the specified _prefix_.
-    #
-    def ngrams_prefixed_by(prefix)
-      @prefixes[prefix].grams.map do |gram|
-        prefix + gram
-      end
-    end
-
-    #
-    # Returns all ngrams that have the specified _postfix_.
-    #
-    def ngrams_postfixed_by(postfix)
-      ngrams_with { |ngram| ngram.prefixed_by?(postfix) }
-    end
-
-    #
     # Returns all ngrams which preceed the specified _gram_.
     #
     def ngrams_preceeding(gram)
-      ngrams_ending_with(gram).map do |ngram|
-        ngrams_postfixed_by(ngram.prefix)
+      ngram_set = NgramSet.new
+
+      ngrams_ending_with(gram).each do |ends_with|
+        ngrams_postfixed_by(ends_with.prefix).each do |ngram|
+          ngram_set << ngram
+        end
       end
+
+      return ngram_set
     end
 
     #
     # Returns all ngrams which occur directly after the specified _gram_.
     #
     def ngrams_following(gram)
-      ngrams_starting_with(gram).map do |ngram|
-        ngrams_prefixed_by(ngram.postfix)
+      ngram_set = NgramSet.new
+
+      ngrams_starting_with(gram).each do |starts_with|
+        ngrams_prefixed_by(starts_with.postfix).each do |ngram|
+          ngram_set << ngram
+        end
       end
+
+      return ngram_set
     end
 
     #
@@ -282,18 +341,26 @@ module Raingrams
     # Returns all grams which preceed the specified _gram_.
     #
     def grams_preceeding(gram)
-      ngrams_ending_with(gram).map do |ngram|
-        ngram[-2]
+      gram_set = Set.new
+
+      ngrams_ending_with(gram).each do |ngram|
+        gram_set << ngram[-2]
       end
+
+      return gram_set
     end
 
     #
     # Returns all grams which occur directly after the specified _gram_.
     #
     def grams_following(gram)
-      ngrams_starting_with(gram).map do |ngram|
-        ngram[1]
+      gram_set = Set.new
+
+      ngram_starting_with(gram).each do |ngram|
+        gram_set << ngram[1]
       end
+
+      return gram_set
     end
 
     #
@@ -332,14 +399,14 @@ module Raingrams
     # Sets the frequency of the specified _ngram_ to the specified _value_.
     #
     def set_ngram_frequency(ngram,value)
-      (@prefixes[ngram.prefix] ||= ProbabilityTable.new).set_frequency_of(ngram.last,value)
+      probability_table(ngram).set_count(ngram.last,value)
     end
 
     #
     # Train the model with the specified _ngram_.
     #
     def train_with_ngram(ngram)
-      (@prefixes[ngram.prefix] ||= ProbabilityTable.new).count(ngram.last)
+      probability_table(ngram).count(ngram.last)
     end
 
     #
@@ -485,6 +552,92 @@ module Raingrams
     end
 
     #
+    # Returns a random gram from the model.
+    #
+    def random_gram
+      prefix = @prefixes.keys[rand(@prefixes.length)]
+
+      return prefix[rand(prefix.length)]
+    end
+
+    #
+    # Returns a random ngram from the model.
+    #
+    def random_ngram
+      prefix_index = rand(@prefixes.length)
+
+      prefix = @prefixes.keys[prefix_index]
+      table = @prefixes.values[prefix_index]
+
+      gram_index = rand(table.grams.length)
+
+      return (prefix + table.grams[gram_index])
+    end
+
+    #
+    # Returns a randomly generated sentence of grams using the given
+    # _options_.
+    #
+    def random_gram_sentence(options={})
+      grams = []
+      last_ngram = @starting_ngram
+      
+      # prime the grams
+      grams += @starting_ngram
+
+      loop do
+        next_ngrams = ngrams_prefixed_by(last_ngram.postfix).to_a
+        last_ngram = next_ngrams[rand(next_ngrams.length)]
+
+        if last_ngram.nil?
+          return []
+        else
+          grams << last_ngram.last
+          break if last_ngram == @stoping_ngram
+        end
+      end
+
+      return grams
+    end
+
+    #
+    # Returns a randomly generated sentence of text using the given
+    # _options_.
+    #
+    def random_sentence(options={})
+      grams = random_ngram_sentence(options)
+      
+      return grams[@ngram_size...-@ngram_size].join(' ')
+    end
+
+    #
+    # Returns a randomly generated paragraph of text using the given
+    # _options_.
+    #
+    def random_paragraph(options={})
+      sentences = []
+
+      (rand(3) + 3).times do
+        sentences << random_sentences(options)
+      end
+
+      return sentences.join(' ')
+    end
+
+    #
+    # Returns randomly generated text using the given _options_.
+    #
+    def random_text(options={})
+      paragraphs = []
+
+      (rand(3) + 5).times do
+        paragraphs << random_paragraph(options)
+      end
+
+      return paragraphs.join("\n\n")
+    end
+
+    #
     # Refreshes the probability tables of the model.
     #
     def refresh(&block)
@@ -531,7 +684,14 @@ module Raingrams
     # tokens.
     #
     def wrap_sentence(sentence)
-      (Tokens.start * @ngram_size) + sentence.to_a + (Tokens.stop * @ngram_size)
+      @starting_ngram + sentence.to_a + @stoping_ngram
+    end
+
+    #
+    # Returns the probability table for the specified _ngram_.
+    #
+    def probability_table(ngram)
+      @prefixes[ngram.prefix] ||= ProbabilityTable.new
     end
 
   end
