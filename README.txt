@@ -9,11 +9,14 @@ Raingrams is a flexible and general-purpose ngrams library written in Ruby.
 Raingrams supports any non-zero ngram size, text/non-text grams, multiple
 parsing styles and open/closed vocabulary models.
 
-== FEATURES/PROBLEMS:
+== FEATURES:
   
-* Supports all non-zero ngram sizes.
+* Supports all ngram sizes above 1.
 * Supports text and non-text grams.
 * Supports Open and Closed vocabulary models.
+* Supports calculating the similarity and commonality of sample text against
+  specified models.
+* Supports generating random text from models.
 
 == INSTALL:
 

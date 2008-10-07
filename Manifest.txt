@@ -38,4 +38,5 @@ tasks/spec.rb
 spec/spec_helper.rb
 spec/ngram_spec.rb
 spec/ngram_set_spec.rb
+spec/probability_table_spec.rb
 spec/raingrams_spec.rb
