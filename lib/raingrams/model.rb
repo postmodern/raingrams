@@ -4,6 +4,8 @@ require 'raingrams/probability_table'
 require 'raingrams/tokens'
 
 require 'set'
+require 'hpricot'
+require 'open-uri'
 
 module Raingrams
   class Model
@@ -79,12 +81,53 @@ module Raingrams
     end
 
     #
-    # Creates a new NgramModel object with the given _options_. If a
-    # _block_ is given, it will be passed the newly created model.
+    # Creates a new model object with the given _options_. If a
+    # _block_ is given, it will be passed the newly created model. After
+    # the block as been called the model will be built.
     #
     def self.build(options={},&block)
       self.new(options) do |model|
         model.build(&block)
+      end
+    end
+
+    #
+    # Creates a new model object with the given _options_ and trains it
+    # with the specified _paragraph_.
+    #
+    def self.train_with_paragraph(paragraph,options={})
+      self.build(options) do |model|
+        model.train_with_paragraph(paragraph)
+      end
+    end
+
+    #
+    # Creates a new model object with the given _options_ and trains it
+    # with the specified _text_.
+    #
+    def self.train_with_text(text,options={})
+      self.build(options) do |model|
+        model.train_with_text(text)
+      end
+    end
+
+    #
+    # Creates a new model object with the given _options_ and trains it
+    # with the contents of the specified _path_.
+    #
+    def self.train_with_file(path,options={})
+      self.build(options) do |model|
+        model.train_with_file(path)
+      end
+    end
+
+    #
+    # Creates a new model object with the given _options_ and trains it
+    # with the inner text of the paragraphs tags at the specified _url_.
+    #
+    def self.train_with_url(url,options={})
+      self.build(options) do |model|
+        model.train_with_url(url)
       end
     end
 
@@ -138,8 +181,8 @@ module Raingrams
       ngram_set = NgramSet.new
 
       @prefixes.each do |prefix,table|
-        table.each_gram do |gram|
-          ngram_set << (prefix + gram)
+        table.each_gram do |postfix_gram|
+          ngram_set << (prefix + postfix_gram)
         end
       end
 
@@ -160,8 +203,8 @@ module Raingrams
     #
     def each_ngram(&block)
       @prefixes.each do |prefix,table|
-        table.each_gram do |gram|
-          block.call(prefix + gram) if block
+        table.each_gram do |postfix_gram|
+          block.call(prefix + postfix_gram) if block
         end
       end
 
@@ -178,7 +221,7 @@ module Raingrams
         selected_ngrams << ngram if block.call(ngram)
       end
 
-      return ngrams
+      return selected_ngrams
     end
 
     #
@@ -221,8 +264,8 @@ module Raingrams
 
       @prefixes.each do |prefix,table|
         if prefix.first == gram
-          table.each_gram do |gram|
-            ngram_set << (prefix + gram)
+          table.each_gram do |postfix_gram|
+            ngram_set << (prefix + postfix_gram)
           end
         end
       end
@@ -246,23 +289,36 @@ module Raingrams
     end
 
     #
-    # Returns the ngrams including the specified _grams_.
+    # Returns the ngrams including any of the specified _grams_.
     #
-    def ngrams_including(*grams)
+    def ngrams_including_any(*grams)
       ngram_set = NgramSet.new
 
       @prefixes.each do |prefix,table|
-        if prefix.includes?(grams)
-          table.each_gram do |gram|
-            ngram_set << (prefix + gram)
+        if prefix.includes_any?(*grams)
+          table.each_gram do |postfix_gram|
+            ngram_set << (prefix + postfix_gram)
           end
         else
-          table.each_gram do |gram|
-            if grams.include?(gram)
-              ngram_set << (prefix + gram)
+          table.each_gram do |postfix_gram|
+            if grams.include?(postfix_gram)
+              ngram_set << (prefix + postfix_gram)
             end
           end
         end
+      end
+
+      return ngram_set
+    end
+
+    #
+    # Returns the ngrams including all of the specified _grams_.
+    #
+    def ngrams_including_all(*grams)
+      ngram_set = NgramSet.new
+
+      each_ngram do |ngram|
+        ngram_set << ngram if ngram.includes_all?(*grams)
       end
 
       return ngram_set
@@ -300,6 +356,8 @@ module Raingrams
       end
     end
 
+    alias ngrams_from_paragraph ngrams_from_text
+
     #
     # Returns all ngrams which preceed the specified _gram_.
     #
@@ -334,7 +392,19 @@ module Raingrams
     # Returns all grams within the model.
     #
     def grams
-      @prefixes.keys.flatten.uniq
+      @prefixes.keys.inject(Set.new) do |all_grams,gram|
+        all_grams + gram
+      end
+    end
+
+    #
+    # Returns +true+ if the model contain the specified _gram_, returns
+    # +false+ otherwise.
+    #
+    def has_gram?(gram)
+      @prefixes.keys.any? do |prefix|
+        prefix.include?(gram)
+      end
     end
 
     #
@@ -424,10 +494,50 @@ module Raingrams
     end
 
     #
+    # Train the model with the specified _paragraphs_.
+    #
+    def train_with_paragraph(paragraph)
+      train_with_ngrams(ngrams_from_paragraph(paragraphs))
+    end
+
+    #
     # Train the model with the specified _text_.
     #
     def train_with_text(text)
       train_with_ngrams(ngrams_from_text(text))
+    end
+
+    #
+    # Train the model with the contents of the specified _path_.
+    #
+    def train_with_file(path)
+      train_with_text(File.read(path))
+    end
+
+    #
+    # Train the model with the inner text of the paragraph tags at the
+    # specified _url_.
+    #
+    def train_with_url(url)
+      doc = Hpricot(open(url))
+
+      return doc.search('p').map do |p|
+        train_with_paragraph(p.inner_text)
+      end
+    end
+
+    #
+    # Returns the observed frequency of the specified _ngram_ within
+    # the training text.
+    #
+    def frequency_of_ngram(ngram)
+      prefix = ngram.prefix
+
+      if @prefixes.has_key?(prefix)
+        return @prefixes[prefix].frequency_of(ngram.last)
+      else
+        return 0
+      end
     end
 
     #
@@ -445,6 +555,20 @@ module Raingrams
     end
 
     #
+    # Returns the observed frequency of the specified _ngrams_ occurring
+    # within the training text.
+    #
+    def frequencies_for(ngrams)
+      table = {}
+
+      ngrams.each do |ngram|
+        table[ngram] = frequency_of_ngram(ngrams)
+      end
+
+      return table
+    end
+
+    #
     # Returns the probability of the specified _ngrams_ occurring within
     # arbitrary text.
     #
@@ -459,6 +583,16 @@ module Raingrams
     end
 
     #
+    # Returns the total observed frequency of the specified _ngrams_
+    # occurring within the training text.
+    #
+    def frequencies_of_ngrams(ngrams)
+      frequencies_for(ngrams).values.inject do |total,freq|
+        total + freq
+      end
+    end
+
+    #
     # Returns the joint probability of the specified _ngrams_ occurring
     # within arbitrary text.
     #
@@ -466,14 +600,6 @@ module Raingrams
       probabilities_for(ngrams).values.inject do |joint,prob|
         joint * prob
       end
-    end
-
-    #
-    # Returns the probably of the specified _gram_ occurring within
-    # arbitrary text.
-    #
-    def probability_of_gram(gram)
-      probability_of_ngrams(ngrams_starting_with(gram))
     end
 
     #
