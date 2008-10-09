@@ -35,8 +35,12 @@ module Raingrams
       select { |ngram| ngram.include?(gram) }
     end
 
-    def includes(*grams)
-      select { |ngram| ngram.includes?(*grams) }
+    def including_any(*grams)
+      select { |ngram| ngram.includes_any?(*grams) }
+    end
+
+    def including_all(*grams)
+      select { |ngram| ngram.includes_all?(*grams) }
     end
 
   end
