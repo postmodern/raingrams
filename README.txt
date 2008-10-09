@@ -6,21 +6,57 @@
 == DESCRIPTION:
   
 Raingrams is a flexible and general-purpose ngrams library written in Ruby.
-Raingrams supports any non-zero ngram size, text/non-text grams, multiple
+Raingrams supports ngram sizes greater than 1, text/non-text grams, multiple
 parsing styles and open/closed vocabulary models.
 
 == FEATURES:
   
-* Supports all ngram sizes above 1.
+* Supports ngram sizes greater than 1.
 * Supports text and non-text grams.
 * Supports Open and Closed vocabulary models.
 * Supports calculating the similarity and commonality of sample text against
   specified models.
 * Supports generating random text from models.
 
+== REQUIREMENTS:
+
+* Hpricot
+
 == INSTALL:
 
   $ sudo gem install raingrams
+
+== EXAMPLES:
+
+* Train a model with ycombinator comments:
+
+  require 'raingrams'
+  require 'hpricot'
+  require 'open-uri'
+  
+  include Raingrams
+  
+  model = BigramModel.build do |model|
+    doc = Hpricot(open('http://news.ycombinator.org/newcomments'))
+    doc.search('span.comment') do |p|
+      model.train_with_text(p.inner_text)
+    end
+  end
+
+* Update a trained model:
+
+  model.train_with_text %{Interesting videos. Anders talks about functional
+    support on .net, concurrency, immutability. Guy Steele talks about
+    Fortress on JVM. Too bad they are afraid of macros (access to AST),
+    though Steele does say Fortress has some support.}
+
+  model.refresh
+
+* Generate a random sentence:
+
+  model.random_sentence
+  # => "OTOOH if you use slicehost even offer to bash Apple makes it will
+  exit and its 38 month ago based configuration of little networks created."
 
 == LICENSE:
 
