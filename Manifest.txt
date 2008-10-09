@@ -35,8 +35,16 @@ lib/raingrams/open_vocabulary/pentagram_model.rb
 lib/raingrams/open_vocabulary/hexagram_model.rb
 lib/raingrams/open_vocabulary.rb
 tasks/spec.rb
+spec/training/snowcrash.txt
+spec/helpers/training.rb
+spec/helpers.rb
 spec/spec_helper.rb
 spec/ngram_spec.rb
 spec/ngram_set_spec.rb
 spec/probability_table_spec.rb
 spec/raingrams_spec.rb
+spec/model_examples.rb
+spec/bigram_model_spec.rb
+spec/trigram_model_spec.rb
+spec/quadgram_model_spec.rb
+spec/pentagram_model_spec.rb
