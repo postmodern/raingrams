@@ -46,9 +46,18 @@ describe NgramSet do
     ]
   end
 
-  it "should select ngrams which includes specified grams" do
-    @ngrams.includes(:the, :dog).should == NgramSet[
+  it "should select ngrams which include any of the specified grams" do
+    @ngrams.including_any(:the, :dog).should == NgramSet[
       Ngram[:the, :dog],
+      Ngram[:dog, :jumped],
+      Ngram[:through, :the],
+      Ngram[:the, :hoop]
+    ]
+  end
+
+  it "should select ngrams which include all of the specified grams" do
+    @ngrams.including_all(:the, :dog).should == NgramSet[
+      Ngram[:the, :dog]
     ]
   end
 end

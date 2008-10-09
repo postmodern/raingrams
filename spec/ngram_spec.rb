@@ -24,6 +24,6 @@ describe Ngram do
   end
 
   it "should include certain grams" do
-    @ngram.includes?(:one, :three).should == true
+    @ngram.includes_all?(:one, :three).should == true
   end
 end
