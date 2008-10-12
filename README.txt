@@ -58,6 +58,14 @@ parsing styles and open/closed vocabulary models.
   # => "OTOOH if you use slicehost even offer to bash Apple makes it will
   exit and its 38 month ago based configuration of little networks created."
 
+* Dump a model to a file, to be marshaled later:
+
+  model.save('path/for/model')
+
+* Load a model from a file:
+
+  Model.open('path/for/model')
+
 == LICENSE:
 
 The MIT License
