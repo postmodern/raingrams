@@ -58,6 +58,7 @@ module Raingrams
       @ignore_punctuation = true
       @ignore_urls = true
       @ignore_phone_numbers = false
+      @ignore_references = false
 
       if options.has_key?(:ignore_case)
         @ignore_case = options[:ignore_case]
@@ -73,6 +74,10 @@ module Raingrams
 
       if options.has_key?(:ignore_phone_numbers)
         @ignore_phone_numbers = options[:ignore_phone_numbers]
+      end
+
+      if options.has_key?(:ignore_references)
+        @ignore_references = options[:ignore_references]
       end
 
       @prefixes = {}
@@ -135,12 +140,16 @@ module Raingrams
     # Parses the specified _sentence_ and returns an Array of tokens.
     #
     def parse_sentence(sentence)
-      # eat tailing punctuation
-      sentence = sentence.to_s.gsub(/[\.\?!]$/,'')
+      sentence = sentence.to_s
+
+      if @ignore_punctuation
+        # eat tailing punctuation
+        sentence.gsub!(/[\.\?!]*$/,'')
+      end
 
       if @ignore_urls
         # remove URLs
-        sentence.gsub!(/\s*\w+:\/\/[\w\/,\._\-%\?&=]*\s*/,' ')
+        sentence.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
       end
 
       if @ignore_phone_numbers
@@ -150,7 +159,7 @@ module Raingrams
 
       if @ignore_references
         # remove RFC style references
-        sentence.gsub!(/\s*\[\d+\]\s*/,' ')
+        sentence.gsub!(/\s*[\(\{\[]\d+[\)\}\]]\s*/,' ')
       end
 
       if @ignore_case
@@ -160,10 +169,10 @@ module Raingrams
 
       if @ignore_punctuation
         # split and ignore punctuation characters
-        return sentence.scan(/\w+[_\.:']?\w+/)
+        return sentence.scan(/\w+[\-_\.:']\w+|\w+/)
       else
         # split and accept punctuation characters
-        return sentence.scan(/[\w\-_,\.;'"\\\/]+/)
+        return sentence.scan(/[\w\-_,:;\.\?\!'"\\\/]+/)
       end
     end
 
@@ -171,7 +180,7 @@ module Raingrams
     # Parses the specified _text_ and returns an Array of sentences.
     #
     def parse_text(text)
-      text.to_s.scan(/[^\s\.\?!][^\.\?!]*/)
+      text.to_s.scan(/[^\s\.\?!][^\.\?!]*[\.\?\!]/)
     end
 
     #
@@ -194,7 +203,11 @@ module Raingrams
     # +false+ otherwise.
     #
     def has_ngram?(ngram)
-      @prefixes[ngram.prefix].has_gram?(ngram.last)
+      if @prefixes.has_key?(ngram.prefix)
+        return @prefixes[ngram.prefix].has_gram?(ngram.last)
+      else
+        return false
+      end
     end
 
     #
@@ -446,7 +459,7 @@ module Raingrams
     # within the model.
     #
     def common_ngrams_from_fragment(fragment)
-      ngrams_from_fragment(words).select { |ngram| has_ngram?(ngram) }
+      ngrams_from_fragment(fragment).select { |ngram| has_ngram?(ngram) }
     end
 
     #
@@ -562,7 +575,7 @@ module Raingrams
       table = {}
 
       ngrams.each do |ngram|
-        table[ngram] = frequency_of_ngram(ngrams)
+        table[ngram] = frequency_of_ngram(ngram)
       end
 
       return table
@@ -586,7 +599,7 @@ module Raingrams
     # Returns the total observed frequency of the specified _ngrams_
     # occurring within the training text.
     #
-    def frequencies_of_ngrams(ngrams)
+    def frequency_of_ngrams(ngrams)
       frequencies_for(ngrams).values.inject do |total,freq|
         total + freq
       end
@@ -708,9 +721,6 @@ module Raingrams
       grams = []
       last_ngram = @starting_ngram
       
-      # prime the grams
-      grams += @starting_ngram
-
       loop do
         next_ngrams = ngrams_prefixed_by(last_ngram.postfix).to_a
         last_ngram = next_ngrams[rand(next_ngrams.length)]
@@ -718,8 +728,11 @@ module Raingrams
         if last_ngram.nil?
           return []
         else
-          grams << last_ngram.last
-          break if last_ngram == @stoping_ngram
+          last_gram = last_ngram.last
+
+          break if last_gram == Tokens.stop
+
+          grams << last_gram
         end
       end
 
