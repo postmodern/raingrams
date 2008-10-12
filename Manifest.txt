@@ -43,6 +43,7 @@ spec/ngram_spec.rb
 spec/ngram_set_spec.rb
 spec/probability_table_spec.rb
 spec/raingrams_spec.rb
+spec/model_spec.rb
 spec/model_examples.rb
 spec/bigram_model_spec.rb
 spec/trigram_model_spec.rb
