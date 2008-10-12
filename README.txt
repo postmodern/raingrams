@@ -38,8 +38,8 @@ parsing styles and open/closed vocabulary models.
   
   model = BigramModel.build do |model|
     doc = Hpricot(open('http://news.ycombinator.org/newcomments'))
-    doc.search('span.comment') do |p|
-      model.train_with_text(p.inner_text)
+    doc.search('span.comment') do |span|
+      model.train_with_text(span.inner_text)
     end
   end
 
