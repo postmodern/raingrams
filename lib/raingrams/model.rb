@@ -137,6 +137,20 @@ module Raingrams
     end
 
     #
+    # Marshals a model from the contents of the file at the specified
+    # _path_.
+    #
+    def self.open(path)
+      model = nil
+
+      File.open(path) do |file|
+        model = Marshal.load(file)
+      end
+
+      return model
+    end
+
+    #
     # Parses the specified _sentence_ and returns an Array of tokens.
     #
     def parse_sentence(sentence)
@@ -826,6 +840,17 @@ module Raingrams
     #
     def clear
       @prefixes.clear
+      return self
+    end
+
+    #
+    # Saves the model to the file at the specified _path_.
+    #
+    def save(path)
+      File.open(path,'w') do |file|
+        Marshal.dump(self,file)
+      end
+
       return self
     end
 
