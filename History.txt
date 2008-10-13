@@ -1,4 +1,4 @@
-== 0.1.1 / 2008-10-07
+== 0.1.1 / 2008-10-12
 
 * Improved the parsing abilities of Model#parse_sentence and
   Model#parse_text.
