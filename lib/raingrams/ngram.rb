@@ -70,6 +70,14 @@ module Raingrams
       super(obj.to_gram)
     end
 
+    def includes_any?(*grams)
+      grams.any? { |gram| include?(gram) }
+    end
+
+    def includes_all?(*grams)
+      grams.all? { |gram| include?(gram) }
+    end
+
     def flatten
       self.dup
     end

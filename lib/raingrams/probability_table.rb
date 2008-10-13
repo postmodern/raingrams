@@ -44,11 +44,11 @@ module Raingrams
     end
 
     #
-    # Sets the frequency of the specified _gram_ to the specified _value_.
+    # Iterates over each gram in the probability table, passing each to the
+    # given _block_.
     #
-    def set_frequency_of(gram,value)
-      @dirty = true
-      @frequencies[gram] = value
+    def each_gram(&block)
+      @frequencies.each_key(&block)
     end
 
     #
@@ -67,6 +67,14 @@ module Raingrams
     end
 
     alias [] probability_of
+
+    #
+    # Sets the frequency of the specified _gram_ to the specified _value_.
+    #
+    def set_count(gram,value)
+      @dirty = true
+      @frequencies[gram] = value
+    end
 
     #
     # Increments the frequency of the specified _gram_ and marks the
