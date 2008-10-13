@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 shared_examples_for "Model" do
-
   it "should have ngrams" do
     @model.ngrams.each do |ngram|
       @model.has_ngram?(ngram).should == true
@@ -81,5 +80,4 @@ shared_examples_for "Model" do
       @model.has_ngram?(ngram).should == true
     end
   end
-
 end
