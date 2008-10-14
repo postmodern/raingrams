@@ -161,11 +161,6 @@ module Raingrams
         sentence.gsub!(/[\.\?!]*$/,'')
       end
 
-      if @ignore_urls
-        # remove URLs
-        sentence.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
-      end
-
       if @ignore_phone_numbers
         # remove phone numbers
         sentence.gsub!(/\s*(\d-)?(\d{3}-)?\d{3}-\d{4}\s*/,' ')
@@ -194,7 +189,13 @@ module Raingrams
     # Parses the specified _text_ and returns an Array of sentences.
     #
     def parse_text(text)
-      text.to_s.scan(/[^\s\.\?!][^\.\?!]*[\.\?\!]/)
+      text = text.to_s
+
+      if @ignore_urls
+        text.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
+      end
+
+      return text.scan(/[^\s\.\?!][^\.\?!]*[\.\?\!]/)
     end
 
     #
@@ -524,7 +525,7 @@ module Raingrams
     # Train the model with the specified _paragraphs_.
     #
     def train_with_paragraph(paragraph)
-      train_with_ngrams(ngrams_from_paragraph(paragraphs))
+      train_with_ngrams(ngrams_from_paragraph(paragraph))
     end
 
     #
