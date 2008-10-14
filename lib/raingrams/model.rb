@@ -161,6 +161,15 @@ module Raingrams
         sentence.gsub!(/[\.\?!]*$/,'')
       end
 
+      if @ignore_case
+        # downcase the sentence
+        sentence.downcase!
+      end
+
+      if @ignore_urls
+        sentence.gsub!(/\s*\w+:\/\/[\w\/\+_\-,:%\d\.\-\?&=]*\s*/,' ')
+      end
+
       if @ignore_phone_numbers
         # remove phone numbers
         sentence.gsub!(/\s*(\d-)?(\d{3}-)?\d{3}-\d{4}\s*/,' ')
@@ -169,11 +178,6 @@ module Raingrams
       if @ignore_references
         # remove RFC style references
         sentence.gsub!(/\s*[\(\{\[]\d+[\)\}\]]\s*/,' ')
-      end
-
-      if @ignore_case
-        # downcase the sentence
-        sentence.downcase!
       end
 
       if @ignore_punctuation
