@@ -764,7 +764,14 @@ module Raingrams
         gram == Tokens.start || gram == Tokens.stop
       }.join(' ')
 
-      sentence << '.' if @ignore_punctuation
+      if @ignore_case
+        sentence.capitalize!
+      end
+
+      if @ignore_punctuation
+        sentence << '.'
+      end
+
       return sentence
     end
 
