@@ -141,6 +141,15 @@ module Raingrams
       return self
     end
 
+    #
+    # Returns a Hash representation of the probability table.
+    #
+    def to_hash
+      build
+
+      return @probabilities
+    end
+
     def inspect
       if @dirty
         "#<ProbabilityTable @total=#{@total} @frequencies=#{@frequencies.inspect}>"

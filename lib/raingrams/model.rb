@@ -866,6 +866,13 @@ module Raingrams
       return self
     end
 
+    #
+    # Returns a Hash representation of the model.
+    #
+    def to_hash
+      @prefixes
+    end
+
     protected
 
     #
