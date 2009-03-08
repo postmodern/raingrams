@@ -5,7 +5,7 @@ require 'raingrams/probability_table'
 require 'raingrams/helpers'
 
 require 'set'
-require 'hpricot'
+require 'nokogiri'
 require 'open-uri'
 
 module Raingrams
@@ -473,38 +473,6 @@ module Raingrams
     end
 
     #
-    # Returns the ngrams which occur within the specified _words_ and
-    # within the model.
-    #
-    def common_ngrams_from_words(words)
-      ngrams_from_words(words).select { |ngram| has_ngram?(ngram) }
-    end
-
-    #
-    # Returns the ngrams which occur within the specified _fragment_ and
-    # within the model.
-    #
-    def common_ngrams_from_fragment(fragment)
-      ngrams_from_fragment(fragment).select { |ngram| has_ngram?(ngram) }
-    end
-
-    #
-    # Returns the ngrams which occur within the specified _sentence_ and
-    # within the model.
-    #
-    def common_ngrams_from_sentence(sentence)
-      ngrams_from_sentence(sentence).select { |ngram| has_ngram?(ngram) }
-    end
-
-    #
-    # Returns the ngrams which occur within the specified _text_ and
-    # within the model.
-    #
-    def common_ngrams_from_text(text)
-      ngrams_from_text(text).select { |ngram| has_ngram?(ngram) }
-    end
-
-    #
     # Sets the frequency of the specified _ngram_ to the specified _value_.
     #
     def set_ngram_frequency(ngram,value)
@@ -558,7 +526,7 @@ module Raingrams
     # specified _url_.
     #
     def train_with_url(url)
-      doc = Hpricot(open(url))
+      doc = Nokogiri::HTML(open(url))
 
       return doc.search('p').map do |p|
         train_with_paragraph(p.inner_text)

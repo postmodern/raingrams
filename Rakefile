@@ -9,7 +9,7 @@ Hoe.new('raingrams', Raingrams::VERSION) do |p|
   p.rubyforge_name = 'raingrams'
   p.developer('Postmodern', 'postmodern.mod3@gmail.com')
   p.remote_rdoc_dir = 'docs'
-  p.extra_deps = ['hpricot']
+  p.extra_deps = [['nokogiri', '>=1.2.0']]
 end
 
 # vim: syntax=Ruby

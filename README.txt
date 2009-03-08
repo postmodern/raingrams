@@ -20,7 +20,7 @@ parsing styles and open/closed vocabulary models.
 
 == REQUIREMENTS:
 
-* Hpricot
+* {nokogiri}[http://nokogiri.rubyforge.org/] >= 1.2.0
 
 == INSTALL:
 
@@ -31,13 +31,13 @@ parsing styles and open/closed vocabulary models.
 * Train a model with ycombinator comments:
 
   require 'raingrams'
-  require 'hpricot'
+  require 'nokogiri'
   require 'open-uri'
   
   include Raingrams
   
   model = BigramModel.build do |model|
-    doc = Hpricot(open('http://news.ycombinator.org/newcomments'))
+    doc = Nokogiri::HTML(open('http://news.ycombinator.org/newcomments'))
     doc.search('span.comment') do |span|
       model.train_with_text(span.inner_text)
     end
