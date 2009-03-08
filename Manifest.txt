@@ -20,6 +20,12 @@ lib/raingrams/tokens.rb
 lib/raingrams/ngram.rb
 lib/raingrams/ngram_set.rb
 lib/raingrams/probability_table.rb
+lib/raingrams/helpers.rb
+lib/raingrams/helpers/frequency.rb
+lib/raingrams/helpers/probability.rb
+lib/raingrams/helpers/similarity.rb
+lib/raingrams/helpers/commonality.rb
+lib/raingrams/helpers/random.rb
 lib/raingrams/model.rb
 lib/raingrams/bigram_model.rb
 lib/raingrams/trigram_model.rb
