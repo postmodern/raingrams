@@ -1,7 +1,8 @@
 === 0.1.2 / 2009-04-23
 
+* Require nokogiri >= 1.2.0.
+* No longer require hpricot.
 * Added missing 'lib/raingrams/tokens/tokens.rb' file to the Manifest.
-* Replaced Hpricot with Nokogiri.
 * Added Raingrams::Helpers:
   * Moved text commonality calculating methods into
     Raingrams::Helpers::Commonality.
@@ -13,7 +14,7 @@
     Raingrams::Helpers::Random.
   * Moved text similarity calculating methods into
     Raingrams::Helpers::Similarity.
-* Added Raingrams::Model#to_hash.
+* Added Model#to_hash.
 * Capitalize randomly generated sentences if case is ignored.
 
 === 0.1.1 / 2008-10-12
