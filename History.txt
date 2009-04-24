@@ -1,3 +1,21 @@
+=== 0.1.2 / 2009-04-23
+
+* Added missing 'lib/raingrams/tokens/tokens.rb' file to the Manifest.
+* Replaced Hpricot with Nokogiri.
+* Added Raingrams::Helpers:
+  * Moved text commonality calculating methods into
+    Raingrams::Helpers::Commonality.
+  * Moved text frequency calculating methods into
+    Raingrams::Helpers::Frequency.
+  * Moved text probability calculating methods into
+    Raingrams::Helpers::Probability.
+  * Moved random text generating methods into
+    Raingrams::Helpers::Random.
+  * Moved text similarity calculating methods into
+    Raingrams::Helpers::Similarity.
+* Added Raingrams::Model#to_hash.
+* Capitalize randomly generated sentences if case is ignored.
+
 === 0.1.1 / 2008-10-12
 
 * Improved the parsing abilities of Model#parse_sentence and
