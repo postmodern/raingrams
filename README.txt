@@ -30,41 +30,42 @@ parsing styles and open/closed vocabulary models.
 
 * Train a model with ycombinator comments:
 
-  require 'raingrams'
-  require 'nokogiri'
-  require 'open-uri'
-  
-  include Raingrams
-  
-  model = BigramModel.build do |model|
-    doc = Nokogiri::HTML(open('http://news.ycombinator.org/newcomments'))
-    doc.search('span.comment') do |span|
-      model.train_with_text(span.inner_text)
+    require 'raingrams'
+    require 'nokogiri'
+    require 'open-uri'
+    
+    include Raingrams
+    
+    model = BigramModel.build do |model|
+      doc = Nokogiri::HTML(open('http://news.ycombinator.org/newcomments'))
+      doc.search('span.comment') do |span|
+        model.train_with_text(span.inner_text)
+      end
     end
-  end
 
 * Update a trained model:
 
-  model.train_with_text %{Interesting videos. Anders talks about functional
-    support on .net, concurrency, immutability. Guy Steele talks about
-    Fortress on JVM. Too bad they are afraid of macros (access to AST),
-    though Steele does say Fortress has some support.}
-
-  model.refresh
+    model.train_with_text %{Interesting videos. Anders talks about
+      functional support on .net, concurrency, immutability. Guy Steele
+      talks about Fortress on JVM. Too bad they are afraid of macros
+      (access to AST), though Steele does say Fortress has some support.}
+    
+    model.refresh
 
 * Generate a random sentence:
 
-  model.random_sentence
-  # => "OTOOH if you use slicehost even offer to bash Apple makes it will
-  exit and its 38 month ago based configuration of little networks created."
+    model.random_sentence
+    # => "OTOOH if you use slicehost even offer to bash Apple makes it will
+    exit and its 38 month ago based configuration of little networks
+    created."
 
 * Dump a model to a file, to be marshaled later:
 
-  model.save('path/for/model')
+    model.save('path/for/model')
 
 * Load a model from a file:
 
-  Model.open('path/for/model')
+    Model.open('path/for/model')
 
 == LICENSE:
 
