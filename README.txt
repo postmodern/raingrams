@@ -1,6 +1,7 @@
 = Raingrams
 
 * http://raingrams.rubyforge.org/
+* http://github.com/postmodern/raingrams/
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
