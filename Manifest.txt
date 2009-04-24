@@ -16,6 +16,7 @@ lib/raingrams/tokens/token.rb
 lib/raingrams/tokens/start_sentence.rb
 lib/raingrams/tokens/stop_sentence.rb
 lib/raingrams/tokens/unknown.rb
+lib/raingrams/tokens/tokens.rb
 lib/raingrams/tokens.rb
 lib/raingrams/ngram.rb
 lib/raingrams/ngram_set.rb
