@@ -5,11 +5,11 @@ require 'hoe'
 require './tasks/spec.rb'
 require './lib/raingrams/version.rb'
 
-Hoe.spec('raingrams') do |p|
-  p.rubyforge_name = 'raingrams'
-  p.developer('Postmodern', 'postmodern.mod3@gmail.com')
-  p.remote_rdoc_dir = 'docs'
-  p.extra_deps = [['nokogiri', '>=1.2.0']]
+Hoe.spec('raingrams') do
+  self.rubyforge_name = 'raingrams'
+  self.developer('Postmodern', 'postmodern.mod3@gmail.com')
+  self.remote_rdoc_dir = 'docs'
+  self.extra_deps = [['nokogiri', '>=1.2.0']]
 end
 
 # vim: syntax=Ruby
