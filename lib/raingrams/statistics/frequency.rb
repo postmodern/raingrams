@@ -1,5 +1,5 @@
 module Raingrams
-  module Helpers
+  module Statistics
     module Frequency
       #
       # Returns the observed frequency of the specified _ngram_ within

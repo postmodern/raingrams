@@ -2,7 +2,7 @@ require 'raingrams/ngram'
 require 'raingrams/ngram_set'
 require 'raingrams/tokens'
 require 'raingrams/probability_table'
-require 'raingrams/helpers'
+require 'raingrams/statistics'
 
 require 'set'
 require 'nokogiri'
@@ -11,11 +11,11 @@ require 'open-uri'
 module Raingrams
   class Model
 
-    include Helpers::Frequency
-    include Helpers::Probability
-    include Helpers::Similarity
-    include Helpers::Commonality
-    include Helpers::Random
+    include Statistics::Frequency
+    include Statistics::Probability
+    include Statistics::Similarity
+    include Statistics::Commonality
+    include Statistics::Random
 
     # Size of ngrams to use
     attr_reader :ngram_size

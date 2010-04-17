@@ -1,0 +1,5 @@
+require 'raingrams/statistics/frequency'
+require 'raingrams/statistics/probability'
+require 'raingrams/statistics/similarity'
+require 'raingrams/statistics/commonality'
+require 'raingrams/statistics/random'

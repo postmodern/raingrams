@@ -1,5 +1,0 @@
-require 'raingrams/helpers/frequency'
-require 'raingrams/helpers/probability'
-require 'raingrams/helpers/similarity'
-require 'raingrams/helpers/commonality'
-require 'raingrams/helpers/random'

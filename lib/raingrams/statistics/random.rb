@@ -1,5 +1,5 @@
 module Raingrams
-  module Helpers
+  module Statistics
     module Random
       #
       # Returns a random gram from the model.

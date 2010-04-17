@@ -1,5 +1,5 @@
 module Raingrams
-  module Helpers
+  module Statistics
     module Probability
       #
       # Returns the probability of the specified _ngram_ occurring within

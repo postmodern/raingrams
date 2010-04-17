@@ -1,10 +1,10 @@
-require 'raingrams/helpers/commonality'
+require 'raingrams/statistics/commonality'
 
 module Raingrams
-  module Helpers
+  module Statistics
     module Similarity
       def self.included(base)
-        base.module_eval { include Raingrams::Helpers::Commonality }
+        base.module_eval { include Raingrams::Statistics::Commonality }
       end
 
       #
