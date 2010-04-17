@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-04-16}
+  s.date = %q{2010-04-17}
   s.description = %q{Raingrams is a flexible and general-purpose ngrams library written in Ruby. Raingrams supports ngram sizes greater than 1, text/non-text grams, multiple parsing styles and open/closed vocabulary models.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
      "lib/raingrams/open_vocabulary/pentagram_model.rb",
      "lib/raingrams/open_vocabulary/quadgram_model.rb",
      "lib/raingrams/open_vocabulary/trigram_model.rb",
+     "lib/raingrams/parser.rb",
      "lib/raingrams/pentagram_model.rb",
      "lib/raingrams/probability_table.rb",
      "lib/raingrams/quadgram_model.rb",
