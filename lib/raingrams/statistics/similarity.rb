@@ -3,9 +3,7 @@ require 'raingrams/statistics/commonality'
 module Raingrams
   module Statistics
     module Similarity
-      def self.included(base)
-        base.module_eval { include Raingrams::Statistics::Commonality }
-      end
+      include Commonality
 
       #
       # Returns the conditional probability of the commonality of the

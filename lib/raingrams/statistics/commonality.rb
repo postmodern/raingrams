@@ -3,9 +3,7 @@ require 'raingrams/statistics/probability'
 module Raingrams
   module Statistics
     module Commonality
-      def self.included(base)
-        base.module_eval { include Raingrams::Statistics::Probability }
-      end
+      include Probability
 
       #
       # Returns the ngrams which occur within the specified _words_ and
