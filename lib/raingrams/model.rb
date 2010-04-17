@@ -534,13 +534,20 @@ module Raingrams
     end
 
     #
+    # Caclulates the probabilities of the ngrams.
+    #
+    def calculate!
+      @prefixes.each_value { |table| table.build }
+      return self
+    end
+
+    #
     # Refreshes the probability tables of the model.
     #
     def refresh(&block)
       block.call(self) if block
 
-      @prefixes.each_value { |table| table.build }
-      return self
+      return calculate!
     end
 
     #
