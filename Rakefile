@@ -13,7 +13,6 @@ begin
     gem.email = 'postmodern.mod3@gmail.com'
     gem.homepage = 'http://github.com/postmodern/raingrams'
     gem.authors = ['Postmodern']
-    gem.add_dependency 'nokogiri', '~> 1.4.1'
     gem.add_development_dependency 'rspec', '~> 1.3.0'
     gem.add_development_dependency 'yard', '~> 0.5.3'
     gem.has_rdoc = 'yard'

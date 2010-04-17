@@ -5,8 +5,6 @@ require 'raingrams/probability_table'
 require 'raingrams/statistics'
 
 require 'set'
-require 'nokogiri'
-require 'open-uri'
 
 module Raingrams
   class Model
@@ -519,18 +517,6 @@ module Raingrams
     #
     def train_with_file(path)
       train_with_text(File.read(path))
-    end
-
-    #
-    # Train the model with the inner text of the paragraph tags at the
-    # specified _url_.
-    #
-    def train_with_url(url)
-      doc = Nokogiri::HTML(open(url))
-
-      return doc.search('p').map do |p|
-        train_with_paragraph(p.inner_text)
-      end
     end
 
     #

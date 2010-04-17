@@ -19,10 +19,6 @@ parsing styles and open/closed vocabulary models.
   specified models.
 * Supports generating random text from models.
 
-## REQUIREMENTS:
-
-* [nokogiri](http://nokogiri.rubyforge.org/) >= 1.2.0
-
 ## INSTALL:
 
     $ sudo gem install raingrams
