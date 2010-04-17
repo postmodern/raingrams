@@ -96,7 +96,7 @@ module Raingrams
     #
     def total
       if @dirty
-        @total = @frequencies.values.inject do |sum,freq|
+        @total = @frequencies.values.inject(0) do |sum,freq|
           sum + freq
         end
       end

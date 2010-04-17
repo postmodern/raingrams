@@ -34,7 +34,7 @@ module Raingrams
       # occurring within the training text.
       #
       def frequency_of_ngrams(ngrams)
-        frequencies_for(ngrams).values.inject do |total,freq|
+        frequencies_for(ngrams).values.inject(0) do |total,freq|
           total + freq
         end
       end

@@ -34,7 +34,7 @@ module Raingrams
       # within arbitrary text.
       #
       def probability_of_ngrams(ngrams)
-        probabilities_for(ngrams).values.inject do |joint,prob|
+        probabilities_for(ngrams).values.inject(1.0) do |joint,prob|
           joint * prob
         end
       end
