@@ -1,16 +1,16 @@
-= Raingrams
+# Raingrams
 
-* http://raingrams.rubyforge.org/
-* http://github.com/postmodern/raingrams/
+* [raingrams.rubyforge.org](http://raingrams.rubyforge.org/)
+* [github.com/postmodern/raingrams](http://github.com/postmodern/raingrams/)
 * Postmodern (postmodern.mod3 at gmail.com)
 
-== DESCRIPTION:
+## DESCRIPTION:
   
 Raingrams is a flexible and general-purpose ngrams library written in Ruby.
 Raingrams supports ngram sizes greater than 1, text/non-text grams, multiple
 parsing styles and open/closed vocabulary models.
 
-== FEATURES:
+## FEATURES:
   
 * Supports ngram sizes greater than 1.
 * Supports text and non-text grams.
@@ -19,15 +19,15 @@ parsing styles and open/closed vocabulary models.
   specified models.
 * Supports generating random text from models.
 
-== REQUIREMENTS:
+## REQUIREMENTS:
 
-* {nokogiri}[http://nokogiri.rubyforge.org/] >= 1.2.0
+* [nokogiri](http://nokogiri.rubyforge.org/) >= 1.2.0
 
-== INSTALL:
+## INSTALL:
 
-  $ sudo gem install raingrams
+    $ sudo gem install raingrams
 
-== EXAMPLES:
+## EXAMPLES:
 
 * Train a model with ycombinator comments:
 
@@ -68,27 +68,7 @@ parsing styles and open/closed vocabulary models.
 
     Model.open('path/for/model')
 
-== LICENSE:
+## LICENSE:
 
-The MIT License
+See {file:LICENSE.txt} for license information.
 
-Copyright (c) 2007-2009 Hal Brodigan
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

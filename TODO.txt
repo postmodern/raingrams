@@ -1,5 +1,0 @@
-== TODO:
-
-* Add options to Model#random_sentence for weighting certain grams.
-* Add a command-line utility to utilize the Raingrams API.
-
