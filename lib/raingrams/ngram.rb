@@ -6,8 +6,12 @@ module Raingrams
     #
     # Creates a new Ngram object with the specified _objects_.
     #
-    def initialize(objects)
-      super(objects.map { |obj| obj.to_gram })
+    def initialize(objects=nil)
+      if objects
+        super(objects.map { |obj| obj.to_gram })
+      else
+        super()
+      end
     end
 
     #
