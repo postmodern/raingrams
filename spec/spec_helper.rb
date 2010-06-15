@@ -1,6 +1,16 @@
 require 'rubygems'
-gem 'rspec', '>=1.1.3'
+require 'bundler'
+
+begin
+  Bundler.setup(:runtime, :test)
+rescue Bundler::BundlerError => e
+  STDERR.puts e.message
+  STDERR.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+
 require 'spec'
+require 'raingrams/version'
 
 include Raingrams
 
