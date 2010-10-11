@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 group(:development) do
   gem 'rake',			'~> 0.8.7'
-  gem 'jeweler',		'~> 1.5.0.pre', :git => 'git://github.com/technicalpickles/jeweler.git'
+  gem 'jeweler',		'~> 1.5.0.pre'
 end
 
 group(:doc) do

@@ -1,17 +1,12 @@
-GIT
-  remote: git://github.com/technicalpickles/jeweler.git
-  revision: 68c54875c4f73b0975ab0706afda946b9333f8b7
-  specs:
-    jeweler (1.5.0.pre3)
-      bundler (~> 1.0.0)
-      git (>= 1.2.5)
-      rake
-
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.1.2)
     git (1.2.5)
+    jeweler (1.5.0.pre3)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
     rake (0.8.7)
     rdiscount (1.6.5)
     rspec (2.0.0)
@@ -30,7 +25,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  jeweler (~> 1.5.0.pre)!
+  jeweler (~> 1.5.0.pre)
   rake (~> 0.8.7)
   rdiscount (~> 1.6.3)
   rspec (~> 2.0.0)
