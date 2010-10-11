@@ -24,7 +24,7 @@ GEM
     rspec-mocks (2.0.0)
       rspec-core (= 2.0.0)
       rspec-expectations (= 2.0.0)
-    yard (0.5.8)
+    yard (0.6.1)
 
 PLATFORMS
   ruby
@@ -34,4 +34,4 @@ DEPENDENCIES
   rake (~> 0.8.7)
   rdiscount (~> 1.6.3)
   rspec (~> 2.0.0)
-  yard (~> 0.5.3)
+  yard (~> 0.6.0)
