@@ -66,5 +66,7 @@ parsing styles and open/closed vocabulary models.
 
 ## LICENSE:
 
+Copyright (c) 2010 Hal Brodigan
+
 See {file:LICENSE.txt} for license information.
 
