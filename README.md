@@ -25,7 +25,7 @@ parsing styles and open/closed vocabulary models.
 
 ## Examples
 
-* Train a model with ycombinator comments:
+Train a model with ycombinator comments:
 
     require 'raingrams'
     require 'nokogiri'
@@ -40,7 +40,7 @@ parsing styles and open/closed vocabulary models.
       end
     end
 
-* Update a trained model:
+Update a trained model:
 
     model.train_with_text %{Interesting videos. Anders talks about
       functional support on .net, concurrency, immutability. Guy Steele
@@ -49,18 +49,18 @@ parsing styles and open/closed vocabulary models.
     
     model.refresh
 
-* Generate a random sentence:
+Generate a random sentence:
 
     model.random_sentence
     # => "OTOOH if you use slicehost even offer to bash Apple makes it will
     exit and its 38 month ago based configuration of little networks
     created."
 
-* Dump a model to a file, to be marshaled later:
+Dump a model to a file, to be marshaled later:
 
     model.save('path/for/model')
 
-* Load a model from a file:
+Load a model from a file:
 
     Model.open('path/for/model')
 
