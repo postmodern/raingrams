@@ -1,33 +1,29 @@
 require 'rubygems'
-require 'bundler'
+require 'rake'
 
 begin
-  Bundler.setup(:development, :doc)
-rescue Bundler::BundlerError => e
+  require 'ore/tasks'
+  Ore::Tasks.new
+rescue LoadError => e
   STDERR.puts e.message
-  STDERR.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
+  STDERR.puts "Run `gem install ore-tasks` to install 'ore/tasks'."
 end
 
-require 'rake'
-require 'jeweler'
-require './lib/raingrams/version.rb'
-
-Jeweler::Tasks.new do |gem|
-  gem.name = 'raingrams'
-  gem.version = Raingrams::VERSION
-  gem.license = 'MIT'
-  gem.summary = %Q{A flexible and general-purpose ngrams library written in Ruby.}
-  gem.description = %Q{Raingrams is a flexible and general-purpose ngrams library written in Ruby. Raingrams supports ngram sizes greater than 1, text/non-text grams, multiple parsing styles and open/closed vocabulary models.}
-  gem.email = 'postmodern.mod3@gmail.com'
-  gem.homepage = 'http://github.com/postmodern/raingrams'
-  gem.authors = ['Postmodern']
-  gem.has_rdoc = 'yard'
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new
+rescue LoadError => e
+  task :spec do
+    abort "Please run `gem install rspec` to install RSpec."
+  end
 end
-
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new
 task :default => :spec
 
-require 'yard'
-YARD::Rake::YardocTask.new
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new  
+rescue LoadError => e
+  task :yard do
+    abort "Please run `gem install yard` to install YARD."
+  end
+end

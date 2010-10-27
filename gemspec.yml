@@ -1,0 +1,17 @@
+name: raingrams
+summary: A flexible and general-purpose ngrams library written in Ruby.
+description:
+  Raingrams is a flexible and general-purpose ngrams library written in
+  Ruby. Raingrams supports ngram sizes greater than 1, text/non-text grams,
+  multiple parsing styles and open/closed vocabulary models.
+license: MIT
+authors: Postmodern
+email: postmodern.mod3@gmail.com
+homepage: http://github.com/postmodern/raingrams
+has_yard: true
+
+development_dependencies:
+  ore: ~> 0.1.0
+  ore-tasks: ~> 0.1.0
+  rspec: ~> 2.0.0
+  yard: ~> 0.6.0
