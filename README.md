@@ -4,13 +4,13 @@
 * [github.com/postmodern/raingrams](http://github.com/postmodern/raingrams/)
 * Postmodern (postmodern.mod3 at gmail.com)
 
-## DESCRIPTION:
+## Description
   
 Raingrams is a flexible and general-purpose ngrams library written in Ruby.
 Raingrams supports ngram sizes greater than 1, text/non-text grams, multiple
 parsing styles and open/closed vocabulary models.
 
-## FEATURES:
+## Features
   
 * Supports ngram sizes greater than 1.
 * Supports text and non-text grams.
@@ -19,11 +19,11 @@ parsing styles and open/closed vocabulary models.
   specified models.
 * Supports generating random text from models.
 
-## INSTALL:
+## Install
 
     $ sudo gem install raingrams
 
-## EXAMPLES:
+## Examples
 
 * Train a model with ycombinator comments:
 
@@ -64,7 +64,7 @@ parsing styles and open/closed vocabulary models.
 
     Model.open('path/for/model')
 
-## LICENSE:
+## License
 
 Copyright (c) 2010 Hal Brodigan
 
