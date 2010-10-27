@@ -64,7 +64,7 @@ Load a model from a file:
 
     Model.open('path/for/model')
 
-## License
+## Copyright
 
 Copyright (c) 2010 Hal Brodigan
 
