@@ -1,3 +1,4 @@
 module Raingrams
-  VERSION = '0.1.2'
+  # raingrams version
+  VERSION = '1.0.0'
 end
