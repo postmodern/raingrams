@@ -6,5 +6,5 @@ begin
   end
 rescue NameError
   STDERR.puts "The 'raingrams.gemspec' file requires Ore."
-  STDERR.puts "Run `gem install ore` to install Ore."
+  STDERR.puts "Run `gem install ore-core` to install Ore."
 end
