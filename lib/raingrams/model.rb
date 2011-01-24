@@ -309,7 +309,7 @@ module Raingrams
     #
     # Returns all ngrams which precede the specified _gram_.
     #
-    def ngrams_preceeding(gram)
+    def ngrams_preceding(gram)
       ngram_set = NgramSet.new
 
       ngrams_ending_with(gram).each do |ends_with|
@@ -319,6 +319,13 @@ module Raingrams
       end
 
       return ngram_set
+    end
+
+    #
+    # @deprecated Please use {ngrams_preceding} instead.
+    #
+    def ngrams_preceeding(gram)
+      ngrams_preceding(gram)
     end
 
     #
@@ -358,7 +365,7 @@ module Raingrams
     #
     # Returns all grams which precede the specified _gram_.
     #
-    def grams_preceeding(gram)
+    def grams_preceding(gram)
       gram_set = Set.new
 
       ngrams_ending_with(gram).each do |ngram|
@@ -366,6 +373,13 @@ module Raingrams
       end
 
       return gram_set
+    end
+
+    #
+    # @deprecated Please use {#grams_preceding} instead.
+    #
+    def grams_preceeding(gram)
+      grams_preceding(gram)
     end
 
     #
