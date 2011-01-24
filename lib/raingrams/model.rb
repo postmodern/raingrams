@@ -188,7 +188,7 @@ module Raingrams
     end
 
     #
-    # Returns the ngrams postfixed by the specified _postfix_.
+    # Returns the ngrams affixed with the specified _postfix_.
     #
     def ngrams_postfixed_by(postfix)
       ngram_set = NgramSet.new
@@ -307,7 +307,7 @@ module Raingrams
     alias ngrams_from_paragraph ngrams_from_text
 
     #
-    # Returns all ngrams which preceed the specified _gram_.
+    # Returns all ngrams which precede the specified _gram_.
     #
     def ngrams_preceeding(gram)
       ngram_set = NgramSet.new
@@ -356,7 +356,7 @@ module Raingrams
     end
 
     #
-    # Returns all grams which preceed the specified _gram_.
+    # Returns all grams which precede the specified _gram_.
     #
     def grams_preceeding(gram)
       gram_set = Set.new
@@ -431,7 +431,7 @@ module Raingrams
     end
 
     #
-    # Caclulates the probabilities of the ngrams.
+    # Calculates the probabilities of the ngrams.
     #
     def calculate!
       @prefixes.each_value { |table| table.build }
@@ -498,7 +498,7 @@ module Raingrams
     end
 
     #
-    # Wraps the specified _setence_ with StartSentence and StopSentence
+    # Wraps the specified _sentence_ with StartSentence and StopSentence
     # tokens.
     #
     def wrap_sentence(sentence)

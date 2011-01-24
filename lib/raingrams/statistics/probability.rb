@@ -40,7 +40,7 @@ module Raingrams
       end
 
       #
-      # Returns the probability of the specified _fragment_ occuring within
+      # Returns the probability of the specified _fragment_ occurring within
       # arbitrary text.
       #
       def fragment_probability(fragment)
@@ -48,7 +48,7 @@ module Raingrams
       end
 
       #
-      # Returns the probability of the specified _sentence_ occuring within
+      # Returns the probability of the specified _sentence_ occurring within
       # arbitrary text.
       #
       def sentence_probability(sentence)
@@ -56,7 +56,7 @@ module Raingrams
       end
 
       #
-      # Returns the probability of the specified _text_ occuring within
+      # Returns the probability of the specified _text_ occurring within
       # arbitrary text.
       #
       def text_probability(text)
