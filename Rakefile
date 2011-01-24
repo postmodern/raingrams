@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 
 begin
-  gem 'ore-tasks', '~> 0.2.0'
+  gem 'ore-tasks', '~> 0.3.0'
   require 'ore/tasks'
 
   Ore::Tasks.new
@@ -12,7 +12,7 @@ rescue LoadError => e
 end
 
 begin
-  gem 'rspec', '~> 2.0.0'
+  gem 'rspec', '~> 2.4.0'
   require 'rspec/core/rake_task'
 
   RSpec::Core::RakeTask.new

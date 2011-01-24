@@ -1,4 +1,4 @@
-gem 'rspec', '~> 2.0.0'
+gem 'rspec', '~> 2.4.0'
 require 'rspec'
 
 require 'raingrams/version'
