@@ -87,25 +87,29 @@ describe BigramModel do
       Ngram[:Deliverator, :belongs],
       Ngram[:belongs, :to]
     ]
+    expected = '0.0112293144208038'.to_f
 
-    @model.probability_of_ngrams(ngrams).to_s.should == '0.0112293144208038'
+    @model.probability_of_ngrams(ngrams).should be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for a specified fragment of text" do
     fragment = %{The Deliverator belongs to}
+    expected = '0.0112293144208038'.to_f
 
-    @model.fragment_probability(fragment).to_s.should == '0.0112293144208038'
+    @model.fragment_probability(fragment).should be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for a specified sentence" do
     sentence = %{The Deliverator used to make software.}
+    expected = '4.10042780102381e-07'.to_f
 
-    @model.sentence_probability(sentence).to_s.should == '4.10042780102381e-07'
+    @model.sentence_probability(sentence).should be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for specified text" do
     text = %{The Deliverator used to make software. Still does, sometimes.}
+    expected = '2.40635434332383e-10'.to_f
 
-    @model.text_probability(text).to_s.should == '2.40635434332383e-10'
+    @model.text_probability(text).should be_within(0.0000000000000001).of(expected)
   end
 end

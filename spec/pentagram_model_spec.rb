@@ -89,13 +89,15 @@ describe PentagramModel do
 
   it "should have a probability for a specified sentence" do
     sentence = %{So now he has this other job.}
+    expected = '0.00117370892018779'.to_f
 
-    @model.sentence_probability(sentence).to_s.should == '0.00117370892018779'
+    @model.sentence_probability(sentence).should be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for specified text" do
     text = %{So now he has this other job. No brightness or creativity involved-but no cooperation either.}
+    expected = '2.75518525865679e-06'.to_f
 
-    @model.text_probability(text).to_s.should == '2.75518525865679e-06'
+    @model.text_probability(text).should be_within(0.0000000000000001).of(expected)
   end
 end
