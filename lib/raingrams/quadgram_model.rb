@@ -3,7 +3,7 @@ require 'raingrams/model'
 module Raingrams
   class QuadgramModel < Model
 
-    ngram_size 4
+    NGRAM_SIZE = 4
 
   end
 end

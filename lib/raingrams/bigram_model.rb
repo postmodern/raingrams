@@ -3,7 +3,7 @@ require 'raingrams/model'
 module Raingrams
   class BigramModel < Model
 
-    ngram_size 2
+    NGRAM_SIZE = 2
 
   end
 end

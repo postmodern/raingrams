@@ -3,7 +3,7 @@ require 'raingrams/model'
 module Raingrams
   class HexagramModel < Model
 
-    ngram_size 6
+    NGRAM_SIZE = 6
 
   end
 end

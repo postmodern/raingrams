@@ -17,6 +17,9 @@ module Raingrams
     include Statistics::Commonality
     include Statistics::Random
 
+    # The size of the ngrams
+    NGRAM_SIZE = 1
+
     # Size of ngrams to use
     attr_reader :ngram_size
 
@@ -44,7 +47,7 @@ module Raingrams
     def initialize(options={})
       super(options)
 
-      @ngram_size = options[:ngram_size]
+      @ngram_size = options.fetch(:ngram_size,self.class.const_get(:NGRAM_SIZE))
       @starting_ngram = Ngram.new(Tokens.start * @ngram_size)
       @stoping_ngram = Ngram.new(Tokens.stop * @ngram_size)
 
@@ -499,17 +502,6 @@ module Raingrams
     end
 
     protected
-
-    #
-    # Defines the default ngram _size_ for the model.
-    #
-    def self.ngram_size(size)
-      class_eval %{
-        def initialize(options={},&block)
-          super(options.merge(:ngram_size => #{size.to_i}),&block)
-        end
-      }
-    end
 
     #
     # Wraps the specified _sentence_ with StartSentence and StopSentence

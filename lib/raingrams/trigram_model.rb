@@ -3,7 +3,7 @@ require 'raingrams/model'
 module Raingrams
   class TrigramModel < Model
 
-    ngram_size 3
+    NGRAM_SIZE = 3
 
   end
 end
