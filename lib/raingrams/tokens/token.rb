@@ -29,10 +29,10 @@ module Raingrams
       #
       def eql?(other)
         if other.kind_of?(Token)
-          return (@gram == other.gram)
+          @gram == other.gram
+        else
+          false
         end
-
-        return false
       end
 
       alias == eql?
