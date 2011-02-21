@@ -5,11 +5,11 @@ require 'set'
 module Raingrams
   class NgramSet < Set
 
-    def select(&block)
+    def select
       selected_ngrams = self.class.new
 
       each do |ngram|
-        selected_ngrams << ngram if block.call(ngram)
+        selected_ngrams << ngram if yield(ngram)
       end
 
       return selected_ngrams

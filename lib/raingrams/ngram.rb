@@ -26,13 +26,13 @@ module Raingrams
     # ngram.
     #
     def +(grams)
-      if grams.kind_of?(Array)
-        return self.class.new(super(grams.map { |gram|
-          gram.to_gram
-        }))
-      else
-        return self.class.new(super([grams.to_gram]))
-      end
+      grams = if grams.kind_of?(Enumerable)
+                grams.map { |gram| gram.to_gram }
+              else
+                [grams.to_gram]
+              end
+
+      return self.class.new(super(grams))
     end
 
     def <<(gram)
@@ -63,11 +63,11 @@ module Raingrams
     end
 
     def starts_with?(obj)
-      self.first == obj.to_gram
+      first == obj.to_gram
     end
 
     def ends_with?(obj)
-      self.last == obj.to_gram
+      last == obj.to_gram
     end
 
     def include?(obj)
@@ -82,9 +82,7 @@ module Raingrams
       grams.all? { |gram| include?(gram) }
     end
 
-    def flatten
-      self.dup
-    end
+    alias flatten dup
 
     def flatten!
       self
@@ -95,7 +93,7 @@ module Raingrams
     end
 
     def inspect
-      'Ngram[' + self.map { |gram| gram.inspect }.join(', ') + ']'
+      'Ngram[' + map { |gram| gram.inspect }.join(', ') + ']'
     end
 
   end
