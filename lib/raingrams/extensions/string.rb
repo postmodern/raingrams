@@ -3,8 +3,6 @@ class String
   #
   # Interns the string for usage as a gram.
   #
-  def to_gram
-    intern
-  end
+  alias to_gram intern
 
 end
