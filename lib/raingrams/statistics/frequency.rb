@@ -36,7 +36,7 @@ module Raingrams
       def frequency_of_ngrams(ngrams)
         total = 0
 
-        frequencies_for(ngrams).each_value { |freq| total + freq }
+        frequencies_for(ngrams).each_value { |freq| total += freq }
         return total
       end
     end
