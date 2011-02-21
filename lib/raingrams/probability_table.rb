@@ -97,7 +97,7 @@ module Raingrams
     def total
       if @dirty
         @total = 0
-        @frequencies.each_value { |freq| @totle += freq }
+        @frequencies.each_value { |freq| @total += freq }
       end
 
       return @total
