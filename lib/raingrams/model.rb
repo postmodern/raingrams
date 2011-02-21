@@ -41,7 +41,7 @@ module Raingrams
     # <tt>:ignore_urls</tt>:: Defaults to +false+.
     # <tt>:ignore_phone_numbers</tt>:: Defaults to +false+.
     #
-    def initialize(options={},&block)
+    def initialize(options={})
       super(options)
 
       @ngram_size = options[:ngram_size]
@@ -50,7 +50,7 @@ module Raingrams
 
       @prefixes = {}
 
-      block.call(self) if block
+      yield self if block_given?
     end
 
     #
@@ -149,10 +149,10 @@ module Raingrams
     # Iterates over the ngrams that compose the model, passing each one
     # to the given _block_.
     #
-    def each_ngram(&block)
+    def each_ngram
       @prefixes.each do |prefix,table|
         table.each_gram do |postfix_gram|
-          block.call(prefix + postfix_gram) if block
+          yield(prefix + postfix_gram) if block_given?
         end
       end
 
@@ -162,11 +162,11 @@ module Raingrams
     #
     # Selects the ngrams that match the given _block_.
     #
-    def ngrams_with(&block)
+    def ngrams_with
       selected_ngrams = NgramSet.new
 
       each_ngram do |ngram|
-        selected_ngrams << ngram if block.call(ngram)
+        selected_ngrams << ngram if yield(ngram)
       end
 
       return selected_ngrams
@@ -455,8 +455,8 @@ module Raingrams
     #
     # Refreshes the probability tables of the model.
     #
-    def refresh(&block)
-      block.call(self) if block
+    def refresh
+      yield self if block_given?
 
       return calculate!
     end
@@ -464,11 +464,11 @@ module Raingrams
     #
     # Clears and rebuilds the model.
     #
-    def build(&block)
+    def build
       refresh do
         clear
 
-        block.call(self) if block
+        yield self if block_given?
       end
     end
 
