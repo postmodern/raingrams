@@ -8,11 +8,8 @@ module Raingrams
       attr_reader :lexicon
 
       def initialize(options={},&block)
-        @lexicon = (options[:lexicon] || [])
-
-        @lexicon.map! do |word|
-          word.to_gram
-        end
+        @lexicon = options.fetch(:lexicon,[])
+        @lexicon.map! { |word| word.to_gram }
 
         super(options,&block)
       end
