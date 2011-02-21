@@ -55,7 +55,7 @@ module Raingrams
     # Returns the frequency of the specified _gram_. Returns +0+ by default.
     #
     def frequency_of(gram)
-      @frequencies[gram] || 0
+      @frequencies.fetch(gram,0)
     end
 
     #
@@ -63,7 +63,7 @@ module Raingrams
     # <tt>0.0</tt> by default.
     #
     def probability_of(gram)
-      @probabilities[gram] || 0.0
+      @probabilities.fetch(gram,0.0)
     end
 
     alias [] probability_of
@@ -96,9 +96,8 @@ module Raingrams
     #
     def total
       if @dirty
-        @total = @frequencies.values.inject(0) do |sum,freq|
-          sum + freq
-        end
+        @total = 0
+        @frequencies.each_value { |freq| @totle += freq }
       end
 
       return @total
@@ -152,7 +151,7 @@ module Raingrams
 
     def inspect
       if @dirty
-        "#<ProbabilityTable @total=#{@total} @frequencies=#{@frequencies.inspect}>"
+        "#<#{self.class}: @total=#{@total} @frequencies=#{@frequencies.inspect}>"
       else
         @probabilities.inspect
       end
