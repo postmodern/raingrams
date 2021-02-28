@@ -1,6 +1,7 @@
-pkg
-doc
-web
+/Gemfile.lock
+/pkg
+/doc
+/web
 .DS_Store
 .yardoc
 *.swp
