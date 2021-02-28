@@ -8,22 +8,22 @@ describe Ngram do
   end
 
   it "should have a prefix" do
-    @ngram.prefix.should == Ngram[:one, :two]
+    expect(@ngram.prefix).to eq(Ngram[:one, :two])
   end
 
   it "should have a postfix" do
-    @ngram.postfix.should == Ngram[:two, :three]
+    expect(@ngram.postfix).to eq(Ngram[:two, :three])
   end
 
   it "should begin with a gram" do
-    @ngram.starts_with?(:one).should == true
+    expect(@ngram.starts_with?(:one)).to eq(true)
   end
 
   it "should end with a gram" do
-    @ngram.ends_with?(:three).should == true
+    expect(@ngram.ends_with?(:three)).to eq(true)
   end
 
   it "should include certain grams" do
-    @ngram.includes_all?(:one, :three).should == true
+    expect(@ngram.includes_all?(:one, :three)).to eq(true)
   end
 end

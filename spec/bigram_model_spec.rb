@@ -20,7 +20,7 @@ describe BigramModel do
       Ngram[:so, :equipped]
     ]
 
-    @model.ngrams_from_words(words).should == ngrams
+    expect(@model.ngrams_from_words(words)).to eq(ngrams)
   end
 
   it "should return common ngrams from words" do
@@ -31,7 +31,7 @@ describe BigramModel do
       Ngram[:is, :a]
     ]
 
-    @model.common_ngrams_from_words(words).should == ngrams
+    expect(@model.common_ngrams_from_words(words)).to eq(ngrams)
   end
 
   it "should return common ngrams from a specified fragment of text" do
@@ -42,7 +42,7 @@ describe BigramModel do
       Ngram[:is, :a]
     ]
 
-    @model.common_ngrams_from_fragment(fragment).should == ngrams
+    expect(@model.common_ngrams_from_fragment(fragment)).to eq(ngrams)
   end
 
   it "should return common ngrams from a specified sentence" do
@@ -56,19 +56,19 @@ describe BigramModel do
       Ngram[Tokens.stop, Tokens.stop]
     ]
 
-    @model.common_ngrams_from_sentence(sentence).should == ngrams
+    expect(@model.common_ngrams_from_sentence(sentence)).to eq(ngrams)
   end
 
   it "should have a frequency for a specified ngram" do
     ngram = Ngram[:teensy, :darts]
 
-    @model.frequency_of_ngram(ngram).should == 1
+    expect(@model.frequency_of_ngram(ngram)).to eq(1)
   end
 
   it "should have a probability for a specified ngram" do
     ngram = Ngram[:teensy, :darts]
 
-    @model.probability_of_ngram(ngram).should == 1.0
+    expect(@model.probability_of_ngram(ngram)).to eq(1.0)
   end
 
   it "should have a frequency for specified ngrams" do
@@ -78,7 +78,7 @@ describe BigramModel do
       Ngram[:sintered, :armorgel]
     ]
 
-    @model.frequency_of_ngrams(ngrams).should == 3
+    expect(@model.frequency_of_ngrams(ngrams)).to eq(3)
   end
 
   it "should have a probability of specified ngrams" do
@@ -89,27 +89,27 @@ describe BigramModel do
     ]
     expected = '0.0112293144208038'.to_f
 
-    @model.probability_of_ngrams(ngrams).should be_within(0.0000000000000001).of(expected)
+    expect(@model.probability_of_ngrams(ngrams)).to be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for a specified fragment of text" do
     fragment = %{The Deliverator belongs to}
     expected = '0.0112293144208038'.to_f
 
-    @model.fragment_probability(fragment).should be_within(0.0000000000000001).of(expected)
+    expect(@model.fragment_probability(fragment)).to be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for a specified sentence" do
     sentence = %{The Deliverator used to make software.}
     expected = '4.10042780102381e-07'.to_f
 
-    @model.sentence_probability(sentence).should be_within(0.0000000000000001).of(expected)
+    expect(@model.sentence_probability(sentence)).to be_within(0.0000000000000001).of(expected)
   end
 
   it "should have a probability for specified text" do
     text = %{The Deliverator used to make software. Still does, sometimes.}
     expected = '2.40635434332383e-10'.to_f
 
-    @model.text_probability(text).should be_within(0.0000000000000001).of(expected)
+    expect(@model.text_probability(text)).to be_within(0.0000000000000001).of(expected)
   end
 end

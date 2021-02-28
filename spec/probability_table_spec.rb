@@ -16,53 +16,53 @@ describe ProbabilityTable do
     end
 
     it "should not be dirty" do
-      @empty_table.should_not be_dirty
+      expect(@empty_table).not_to be_dirty
     end
 
     it "should be empty" do
-      @empty_table.should be_empty
+      expect(@empty_table).to be_empty
     end
 
     it "should not have any frequencies" do
-      @empty_table.frequencies.should be_empty
+      expect(@empty_table.frequencies).to be_empty
     end
 
     it "should have no probabilities" do
-      @empty_table.probabilities.should be_empty
+      expect(@empty_table.probabilities).to be_empty
     end
 
     it "should have no grams" do
-      @empty_table.grams.should be_empty
+      expect(@empty_table.grams).to be_empty
     end
   end
 
   describe "un-built table" do
     it "should be dirty" do
-      @table.should be_dirty
+      expect(@table).to be_dirty
     end
 
     it "should have the observed grams" do
-      (@table.grams - @grams.uniq).should be_empty
+      expect(@table.grams - @grams.uniq).to be_empty
     end
 
     it "should have non-zero frequencies" do
       @table.frequencies.each_value do |freq|
-        freq.should > 0
+        expect(freq).to be > 0
       end
     end
 
     it "should have non-zero frequencies for grams it has observed" do
       @grams.uniq.each do |g|
-        @table.frequency_of(g).should > 0
+        expect(@table.frequency_of(g)).to be > 0
       end
     end
 
     it "should return a zero frequency for unknown grams" do
-      @table.frequency_of(:x).should == 0
+      expect(@table.frequency_of(:x)).to eq(0)
     end
 
     it "should not have any probabilities yet" do
-      @table.probabilities.should be_empty
+      expect(@table.probabilities).to be_empty
     end
   end
 
@@ -72,22 +72,22 @@ describe ProbabilityTable do
     end
 
     it "should not be dirty" do
-      @table.should_not be_dirty
+      expect(@table).not_to be_dirty
     end
 
     it "should return a zero probability for unknown grams" do
-      @table.probability_of(:x).should == 0.0
+      expect(@table.probability_of(:x)).to eq(0.0)
     end
 
     it "should have non-zero probabilities" do
       @table.probabilities.each_value do |prob|
-        prob.should > 0.0
+        expect(prob).to be > 0.0
       end
     end
 
     it "should have non-zero probabilities for grams it has observed" do
       @grams.uniq.each do |g|
-        @table.probability_of(g).should > 0.0
+        expect(@table.probability_of(g)).to be > 0.0
       end
     end
   end
